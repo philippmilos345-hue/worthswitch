@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WorthSwitch Hrvatska — MVP</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#f5f7fb;color:#172033}
+.container{max-width:1050px;margin:auto;padding:28px 18px 60px}.hero{padding:30px 0 20px}
+.logo{font-weight:800;font-size:25px;letter-spacing:-.6px}.logo span{color:#5b61f6}
+h1{font-size:42px;line-height:1.05;letter-spacing:-1.5px;margin:24px 0 12px}h2{margin:0 0 8px;font-size:25px}
+.lead{font-size:18px;color:#647085;max-width:650px;line-height:1.5}.card{background:white;border:1px solid #e5e9f2;border-radius:18px;padding:22px;box-shadow:0 8px 28px #1720330a;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+label{display:block;font-size:13px;font-weight:700;color:#596579;margin:13px 0 6px}input,select{width:100%;padding:12px 13px;border:1px solid #dce1eb;border-radius:10px;font-size:15px;background:#fff}input:focus{outline:2px solid #dfe2ff;border-color:#7077ff}
+button{border:0;border-radius:11px;padding:13px 18px;font-weight:800;font-size:15px;cursor:pointer}.primary{background:#5b61f6;color:white}.secondary{background:#eef0ff;color:#444bd8}.back{background:#eef1f6;color:#465166;margin-right:8px}.actions{display:flex;justify-content:space-between;margin-top:18px}
+.hidden{display:none}.step{color:#747e91;font-size:13px;font-weight:700}.note{font-size:12px;color:#778196;line-height:1.45}.toggle{display:flex;align-items:center;gap:9px;margin-top:13px}.toggle input{width:auto}
+.result{background:#111827;color:white;border-radius:22px;padding:28px}.result .big{font-size:45px;font-weight:850;letter-spacing:-1px;margin:8px 0}.green{color:#55d98a}.red{color:#ff8585}
+.bar{height:12px;background:#e7ebf2;border-radius:20px;overflow:hidden}.bar>div{height:100%;background:#5b61f6;border-radius:20px}.score{font-size:27px;font-weight:850}
+table{width:100%;border-collapse:collapse;margin-top:12px}td,th{text-align:left;padding:10px 7px;border-bottom:1px solid #edf0f5}th{font-size:12px;color:#717b8d;text-transform:uppercase}
+@media(max-width:720px){.grid,.three{grid-template-columns:1fr}h1{font-size:35px}.container{padding:18px 14px}.actions{gap:8px}.actions button{flex:1}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="logo">Worth<span>Switch</span></div>
+    <div id="intro">
+      <h1>Isplati li ti se promijeniti posao?</h1>
+      <p class="lead">Usporedi plaću, bonuse, neoporezive primitke, benefite, rad od doma i vrijeme putovanja — i vidi stvarnu vrijednost nove ponude.</p>
+      <button class="primary" onclick="start()">Usporedi poslove →</button>
+    </div>
+  </div>
+
+  <div id="app" class="hidden">
+    <div class="step" id="stepLabel">1 / 3 — Tvoj trenutni posao</div>
+
+    <section id="step1" class="card">
+      <h2>Trenutni posao</h2><p class="note">Unesi godišnju sliku svog trenutnog paketa.</p>
+      <div class="grid">
+        <div><label>Bruto mjesečna plaća (€)</label><input id="cSalary" type="number" value="2777"></div>
+        <div><label>Broj plaća godišnje</label><input id="cMonths" type="number" value="12"></div>
+        <div><label>Godišnji bonus (€)</label><input id="cBonus" type="number" value="0"></div>
+        <div><label>Regres (€)</label><input id="cRegres" type="number" value="0"></div>
+        <div><label>Božićnica (€)</label><input id="cBoz" type="number" value="0"></div>
+        <div><label>Uskrsnica (€)</label><input id="cUsk" type="number" value="0"></div>
+        <div><label>Prehrana mjesečno (€)</label><input id="cMeal" type="number" value="100"></div>
+        <div><label>Prijevoz mjesečno (€)</label><input id="cTravelPay" type="number" value="80"></div>
+        <div><label>Dani godišnjeg odmora</label><input id="cVacation" type="number" value="25"></div>
+        <div><label>Remote dana tjedno</label><input id="cRemote" type="number" value="2" min="0" max="5"></div>
+        <div><label>Putovanje u jednom smjeru (min)</label><input id="cCommute" type="number" value="30"></div>
+        <div><label>Trošak putovanja po danu (€)</label><input id="cTravelCost" type="number" value="5"></div>
+      </div>
+      <div class="toggle"><input id="cHealth" type="checkbox" checked><label for="cHealth">Sistematski / privatno zdravstveno</label></div>
+      <div class="actions"><span></span><button class="primary" onclick="next(2)">Dalje →</button></div>
+    </section>
+
+    <section id="step2" class="card hidden">
+      <h2>Nova ponuda</h2><p class="note">Unesi ono što ti nudi novi poslodavac.</p>
+      <div class="grid">
+        <div><label>Bruto mjesečna plaća (€)</label><input id="nSalary" type="number" value="3400"></div>
+        <div><label>Broj plaća godišnje</label><input id="nMonths" type="number" value="12"></div>
+        <div><label>Godišnji bonus (€)</label><input id="nBonus" type="number" value="1500"></div>
+        <div><label>Regres (€)</label><input id="nRegres" type="number" value="300"></div>
+        <div><label>Božićnica (€)</label><input id="nBoz" type="number" value="700"></div>
+        <div><label>Uskrsnica (€)</label><input id="nUsk" type="number" value="150"></div>
+        <div><label>Prehrana mjesečno (€)</label><input id="nMeal" type="number" value="100"></div>
+        <div><label>Prijevoz mjesečno (€)</label><input id="nTravelPay" type="number" value="80"></div>
+        <div><label>Dani godišnjeg odmora</label><input id="nVacation" type="number" value="26"></div>
+        <div><label>Remote dana tjedno</label><input id="nRemote" type="number" value="3" min="0" max="5"></div>
+        <div><label>Putovanje u jednom smjeru (min)</label><input id="nCommute" type="number" value="20"></div>
+        <div><label>Trošak putovanja po danu (€)</label><input id="nTravelCost" type="number" value="4"></div>
+      </div>
+      <div class="toggle"><input id="nHealth" type="checkbox" checked><label for="nHealth">Sistematski / privatno zdravstveno</label></div>
+      <div class="actions"><button class="back" onclick="next(1)">← Natrag</button><button class="primary" onclick="calculate()">Izračunaj →</button></div>
+    </section>
+
+    <section id="step3" class="hidden">
+      <div class="result" id="headline"></div>
+      <div class="card"><h2>Usporedba godišnje vrijednosti</h2><div id="comparison"></div></div>
+      <div class="grid">
+        <div class="card"><h2>Vrijeme</h2><p id="timeText"></p><div class="three"><div><div class="score" id="cHours"></div><div class="note">sati putovanja</div></div><div><div class="score" id="nHours"></div><div class="note">sati putovanja</div></div><div><div class="score" id="saved"></div><div class="note">ušteđenih sati</div></div></div></div>
+        <div class="card"><h2>Job Score</h2><div id="scores"></div></div>
+      </div>
+      <div class="card"><h2>Važna napomena</h2><p class="note">Ovaj MVP koristi pojednostavljeni model za usporedbu ukupne vrijednosti poslova. Neto plaća i porezni tretman nisu pravno/porezno mišljenje. Za produkcijsku verziju treba implementirati i redovito održavati hrvatska porezna pravila. Porezna uprava i sama svoj kalkulator plaće označava kao informativan. citeturn0search16</p></div>
+      <div class="actions"><button class="back" onclick="next(2)">← Uredi ponudu</button><button class="secondary" onclick="window.print()">🖨 Ispis / PDF</button></div>
+    </section>
+  </div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+function start(){$('intro').classList.add('hidden');$('app').classList.remove('hidden')}
+function next(n){[1,2].forEach(x=>$('step'+x).classList.toggle('hidden',x!==n));$('step3').classList.add('hidden');$('stepLabel').textContent=n+' / 3 — '+(n===1?'Tvoj trenutni posao':'Nova ponuda');scrollTo(0,0)}
+function num(id){return Number($(id).value)||0}
+function job(p){
+  const gross=p.salary*p.months;
+  const cash=gross+p.bonus+p.regres+p.boz+p.usk+p.meal*12+p.travelPay*12;
+  const officeDays=Math.max(0,260-p.remote*52);
+  const commuteHours=officeDays*p.commute*2/60;
+  const commuteCost=officeDays*p.travelCost;
+  const benefit=(p.health?400:0);
+  // MVP proxy: annual net ≈ 72% of gross; clearly marked as a simplified estimate.
+  const estimatedNet=gross*.72;
+  const value=estimatedNet+p.bonus+p.regres+p.boz+p.usk+p.meal*12+p.travelPay*12+benefit-commuteCost-(commuteHours*10);
+  const scoreMoney=Math.min(100,Math.max(0,estimatedNet/500));
+  const scoreFlex=Math.min(100,p.remote/5*100);
+  const scoreTime=Math.min(100,Math.max(0,100-commuteHours/3));
+  const scoreVacation=Math.min(100,p.vacation/30*100);
+  const total=Math.round(scoreMoney*.45+scoreFlex*.15+scoreTime*.2+scoreVacation*.2);
+  return {gross,cash,officeDays,commuteHours,commuteCost,benefit,estimatedNet,value,scoreMoney,scoreFlex,scoreTime,scoreVacation,total}
+}
+function data(prefix){
+ return {salary:num(prefix+'Salary'),months:num(prefix+'Months'),bonus:num(prefix+'Bonus'),regres:num(prefix+'Regres'),boz:num(prefix+'Boz'),usk:num(prefix+'Usk'),meal:num(prefix+'Meal'),travelPay:num(prefix+'TravelPay'),vacation:num(prefix+'Vacation'),remote:num(prefix+'Remote'),commute:num(prefix+'Commute'),travelCost:num(prefix+'TravelCost'),health:$(prefix+'Health').checked}
+}
+function euro(x){return new Intl.NumberFormat('hr-HR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(x)}
+function calculate(){
+ const c=job(data('c')), n=job(data('n')), diff=n.value-c.value, pct=c.value?diff/c.value*100:0;
+ $('headline').innerHTML=`<div>REZULTAT</div><div class="big ${diff>=0?'green':'red'}">${diff>=0?'🟢 Nova ponuda se isplati':'🔴 Trenutni posao ima veću vrijednost'}</div><div style="font-size:18px">${euro(diff)} godišnje · ${pct.toFixed(1)}%</div><p style="color:#b8c0cf">Procijenjena ukupna vrijednost uključuje primanja, odabrane benefite, trošak putovanja i vrijednost vremena.</p>`;
+ $('comparison').innerHTML=`<table><tr><th></th><th>Trenutni</th><th>Nova ponuda</th></tr>
+ <tr><td>Bruto godišnje</td><td>${euro(c.gross)}</td><td>${euro(n.gross)}</td></tr>
+ <tr><td>Procijenjeni neto od plaće*</td><td>${euro(c.estimatedNet)}</td><td>${euro(n.estimatedNet)}</td></tr>
+ <tr><td>Ostale isplate</td><td>${euro(c.cash-c.gross)}</td><td>${euro(n.cash-n.gross)}</td></tr>
+ <tr><td>Vrijednost benefita</td><td>${euro(c.benefit)}</td><td>${euro(n.benefit)}</td></tr>
+ <tr><td>Trošak putovanja</td><td>-${euro(c.commuteCost)}</td><td>-${euro(n.commuteCost)}</td></tr>
+ <tr><td>Vrijednost vremena*</td><td>-${euro(c.commuteHours*10)}</td><td>-${euro(n.commuteHours*10)}</td></tr>
+ <tr><th>Ukupna vrijednost*</th><th>${euro(c.value)}</th><th>${euro(n.value)}</th></tr></table>`;
+ const saved=c.commuteHours-n.commuteHours;
+ $('cHours').textContent=Math.round(c.commuteHours);$('nHours').textContent=Math.round(n.commuteHours);$('saved').textContent=Math.round(saved);
+ $('timeText').innerHTML=`Nova ponuda znači <b>${saved>=0?'uštediš':'gubiš'} oko ${Math.abs(saved).toFixed(0)} sati godišnje</b> na putovanju. Model trenutno vrednuje slobodan sat s 10 €; korisnik bi u budućoj verziji mogao sam postaviti vrijednost.`;
+ const rows=[['Novac',c.scoreMoney,n.scoreMoney],['Fleksibilnost',c.scoreFlex,n.scoreFlex],['Vrijeme',c.scoreTime,n.scoreTime],['Godišnji',c.scoreVacation,n.scoreVacation]];
+ $('scores').innerHTML=rows.map(r=>`<div style="margin:13px 0"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700"><span>${r[0]}</span><span>${Math.round(r[1])} → ${Math.round(r[2])}</span></div><div class="bar"><div style="width:${r[2]}%"></div></div></div>`).join('')+`<hr><b>Ukupno: ${c.total} → ${n.total} / 100</b>`;
+ $('step1').classList.add('hidden');$('step2').classList.add('hidden');$('step3').classList.remove('hidden');$('stepLabel').textContent='3 / 3 — Rezultat';scrollTo(0,0)
+}
+</script>
+</body></html>
