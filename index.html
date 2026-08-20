@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="description" content="WorthSwitch — usporedi dvije ponude za posao i vidi koja stvarno vrijedi više.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>WorthSwitch Hrvatska v5.1</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" onclick="showLanding();return false;">Worth<span>Switch</span></a>
+      <div class="top-actions">
+        <button class="btn btn-ghost" id="installBtn" hidden>Instaliraj</button>
+        <button class="btn btn-ghost" onclick="showSaved()">Spremljeno</button>
+      </div>
+    </header>
+
+    <section id="landing" class="landing">
+      <div class="hero-card">
+        <div class="eyebrow">HRVATSKA · V5.1</div>
+        <h1>Nova plaća može biti veća, a posao ipak lošiji.</h1>
+        <p>WorthSwitch uspoređuje plaću, bonus, neoporezive primitke, remote rad, godišnji, benefite, putovanje i tvoje vrijeme — pa pokazuje ukupnu vrijednost obje opcije.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" onclick="startFlow()">Usporedi poslove →</button>
+          <button class="btn btn-light btn-lg" onclick="loadDraftAndStart()">Nastavi zadnju usporedbu</button>
+        </div>
+        <div class="trust-row">
+          <span>✓ Bez registracije</span><span>✓ Podaci ostaju na uređaju</span><span>✓ Radi i na mobitelu</span>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card"><div class="feature-icon">💶</div><h3>Total Job Value</h3><p>Ne uspoređuje samo bruto plaću nego cijeli paket.</p></article>
+        <article class="feature-card"><div class="feature-icon">🎯</div><h3>Break-even plaća</h3><p>Vidi minimalnu bruto plaću za koju se prelazak isplati.</p></article>
+        <article class="feature-card"><div class="feature-icon">🏠</div><h3>Remote i vrijeme</h3><p>Vrijeme putovanja pretvara u konkretan godišnji učinak.</p></article>
+        <article class="feature-card"><div class="feature-icon">📲</div><h3>Instaliraj kao app</h3><p>WorthSwitch se može dodati na početni zaslon kao PWA.</p></article>
+      </div>
+    </section>
+
+    <section id="savedPanel" class="panel hidden">
+      <div class="section-head">
+        <div><div class="eyebrow dark">LOKALNO SPREMLJENO</div><h2>Moje usporedbe</h2></div>
+        <button class="btn btn-ghost" onclick="closeSaved()">Zatvori</button>
+      </div>
+      <div id="savedList"></div>
+    </section>
+
+    <main id="wizard" class="hidden">
+      <div class="wizard-head">
+        <div><div class="eyebrow dark" id="stepLabel"></div><div class="progress"><div id="progressBar"></div></div></div>
+        <div class="autosave">● Automatski spremljeno</div>
+      </div>
+
+      <section id="step1" class="panel step">
+        <h2>Porezni profil</h2>
+        <p class="muted">Odaberi grad ili ručno unesi lokalne stope poreza.</p>
+        <div class="grid2">
+          <div><label>Grad / općina</label>
+            <select id="city" data-save onchange="applyCity()">
+              <option value="custom">Ručno / drugo mjesto</option>
+              <option value="zagreb">Zagreb</option>
+              <option value="split">Split</option>
+              <option value="rijeka">Rijeka</option>
+              <option value="osijek">Osijek</option>
+              <option value="bjelovar">Bjelovar</option>
+            </select>
+          </div>
+          <div><label>Naziv mjesta</label><input id="customCity" data-save placeholder="npr. Lekenik"></div>
+          <div><label>Niža stopa (%)</label><input id="taxLow" data-save type="number" step=".1" value="20"></div>
+          <div><label>Viša stopa (%)</label><input id="taxHigh" data-save type="number" step=".1" value="30"></div>
+        </div>
+
+        <h3>Osobni odbitak</h3>
+        <div class="grid3">
+          <div><label>Uzdržavani članovi</label><input id="dependents" data-save type="number" min="0" value="0"></div>
+          <div><label>Broj djece</label><input id="children" data-save type="number" min="0" value="0"></div>
+          <div><label>Invalidnost</label>
+            <select id="disability" data-save>
+              <option value="0">Nema</option>
+              <option value="180">+180 €/mj.</option>
+              <option value="600">+600 €/mj.</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid2">
+  <div>
+    <label>Umanjenje godišnjeg poreza za mlade (2026.)</label>
+    <select id="youthRelief" data-save>
+      <option value="0">Ne primjenjuj / ne ispunjavam uvjet</option>
+      <option value="1">100% — godište 2001. ili mlađe</option>
+      <option value="0.5">50% — godište 1996.–2000.</option>
+    </select>
+  </div>
+  <div>
+    <label>Procjena blagdana koji padaju na radni dan</label>
+    <input id="weekdayHolidays" data-save type="number" min="0" max="20" value="10">
+  </div>
+</div>
+<div id="allowanceInfo" class="info-box"></div>
+        <div class="step-actions"><span></span><button class="btn btn-primary" onclick="goTo(2)">Dalje →</button></div>
+      </section>
+
+      <section id="step2" class="panel step hidden">
+        <h2>Trenutni posao</h2>
+        <p class="muted">Unesi cijeli godišnji paket.</p>
+        <div class="grid2 job-grid" data-prefix="c"></div>
+        <div class="step-actions"><button class="btn btn-ghost" onclick="goTo(1)">← Natrag</button><button class="btn btn-primary" onclick="goTo(3)">Dalje →</button></div>
+      </section>
+
+      <section id="step3" class="panel step hidden">
+        <h2>Nova ponuda</h2>
+        <p class="muted">Unesi novu ponudu. Nepoznate stavke možeš ostaviti na 0.</p>
+        <div class="grid2 job-grid" data-prefix="n"></div>
+        <div class="info-box"><label>Koliko ti vrijedi jedan sat slobodnog vremena? (€)</label><input id="hourValue" data-save type="number" value="10"></div>
+        <div class="step-actions"><button class="btn btn-ghost" onclick="goTo(2)">← Natrag</button><button class="btn btn-primary" onclick="calculate()">Izračunaj →</button></div>
+      </section>
+
+      <section id="step4" class="hidden">
+        <div id="resultHero" class="result-hero"></div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card"><div class="kpi" id="kFin"></div><div class="kpi-label">financijska razlika / god.</div></div>
+          <div class="kpi-card"><div class="kpi" id="kTime"></div><div class="kpi-label">razlika vremena / god.</div></div>
+          <div class="kpi-card"><div class="kpi" id="kBreak"></div><div class="kpi-label">break-even bruto / mj.</div></div>
+          <div class="kpi-card"><div class="kpi" id="kScore"></div><div class="kpi-label">Job Score promjena</div></div>
+        </div>
+
+        <section class="panel">
+          <div class="section-head">
+            <div><h2>Detaljna usporedba</h2><p class="muted">Godišnja vrijednost obje opcije.</p></div>
+            <button class="btn btn-soft" onclick="shareResult()">Podijeli rezultat</button>
+          </div>
+          <div id="comparison"></div>
+        </section>
+
+        <div class="grid2">
+          <section class="panel">
+            <h2>What-if simulator</h2>
+            <p class="muted">Promijeni bruto nove ponude.</p>
+            <input id="simSalary" class="range" type="range" min="1000" max="7000" step="50" oninput="simulate()">
+            <div class="slider-value" id="simVal"></div>
+            <div id="simOut" class="callout"></div>
+          </section>
+          <section class="panel">
+            <h2>Koliko tražiti?</h2>
+            <div id="ask"></div>
+          </section>
+        </div>
+
+        <div class="grid2">
+          <section class="panel"><h2>Vrijeme</h2><div id="time"></div></section>
+          <section class="panel"><h2>Job Score</h2><div id="scores"></div></section>
+        </div>
+
+        <section class="panel">
+          <div class="section-head">
+            <div><h2>Spremi usporedbu</h2><p class="muted">Sprema se lokalno na uređaju.</p></div>
+            <button class="btn btn-primary" onclick="saveComparison()">Spremi</button>
+          </div>
+        </section>
+
+        <div class="step-actions">
+          <button class="btn btn-ghost" onclick="goTo(3)">← Uredi ponudu</button>
+          <div class="action-group">
+            <button class="btn btn-soft" onclick="shareResult()">Podijeli</button>
+            <button class="btn btn-soft" onclick="window.print()">PDF / ispis</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>WorthSwitch v5.1 · informativni kalkulator za Hrvatsku. Godišnji porezni model uključuje mirovinske doprinose, osobni odbitak, prag 60.000 €, lokalne stope i opcionalno umanjenje poreza za mlade. Prije komercijalnog lansiranja potrebna je stručna porezna validacija.</footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
