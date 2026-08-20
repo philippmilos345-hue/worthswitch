@@ -1,218 +1,109 @@
 <!doctype html>
 <html lang="hr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0f172a">
-<title>WorthSwitch Hrvatska v3</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WorthSwitch Hrvatska v4</title>
 <style>
-:root{
-  --bg:#f5f7fb;--panel:#fff;--ink:#111827;--muted:#667085;--line:#e6eaf1;
-  --brand:#5b61f6;--brand-soft:#eef0ff;--good:#0f9d58;--bad:#d64550;--dark:#0f172a
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-.shell{max-width:1160px;margin:auto;padding:20px 16px 64px}
-.nav{display:flex;align-items:center;justify-content:space-between;padding:8px 0 24px}
-.logo{font-weight:950;font-size:28px;letter-spacing:-.8px}.logo span{color:var(--brand)}
-.navRight{display:flex;gap:8px;align-items:center}.tag{font-size:12px;font-weight:850;background:#e9f8ef;color:#18794e;padding:7px 10px;border-radius:999px}
-.hero{background:linear-gradient(135deg,#111827,#1f2937);color:white;border-radius:28px;padding:42px 34px;overflow:hidden;position:relative}
-.hero:after{content:"";position:absolute;width:320px;height:320px;border-radius:50%;background:#5b61f633;right:-80px;top:-100px}
-.hero h1{font-size:52px;line-height:1.02;letter-spacing:-2px;max-width:780px;margin:0 0 14px;position:relative;z-index:1}
-.hero p{font-size:18px;line-height:1.6;max-width:760px;color:#cdd5e1;position:relative;z-index:1}
-.heroActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;position:relative;z-index:1}
-button{border:0;border-radius:12px;padding:13px 18px;font-weight:850;font-size:15px;cursor:pointer}
-.primary{background:var(--brand);color:#fff}.light{background:white;color:#111827}.ghost{background:#eef1f6;color:#475467}.soft{background:var(--brand-soft);color:#454bd8}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 28px}
-.feature{background:white;border:1px solid var(--line);border-radius:18px;padding:18px}.feature b{display:block;margin-bottom:5px}.feature span{font-size:13px;color:var(--muted);line-height:1.45}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 30px #1018280a;margin:16px 0}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-h2{font-size:25px;letter-spacing:-.5px;margin:0 0 7px}h3{font-size:16px;margin:16px 0 5px}
-.muted,.note{color:var(--muted)}.note{font-size:12px;line-height:1.5}
-label{display:block;font-size:12px;font-weight:800;color:#596579;margin:12px 0 6px}
-input,select{width:100%;padding:12px 13px;border:1px solid #d9dfeb;border-radius:11px;font-size:15px;background:white;color:var(--ink)}
-input:focus,select:focus{outline:3px solid #e5e7ff;border-color:#757afb}
-.actions{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.hidden{display:none}
-.progress{height:6px;background:#e8ecf4;border-radius:10px;overflow:hidden;margin:8px 0 22px}.progress div{height:100%;background:var(--brand)}
-.subtle{background:#fafbfe;border:1px solid #eef1f6;border-radius:14px;padding:15px;margin-top:14px}
-.result{background:var(--dark);color:white;border-radius:24px;padding:28px}.result .eyebrow{font-size:12px;font-weight:900;letter-spacing:1px;color:#aeb7c7}.result .big{font-size:40px;font-weight:950;line-height:1.05;letter-spacing:-1px;margin:8px 0}.good{color:#59df93}.bad{color:#ff9098}
-.kpi{font-size:28px;font-weight:950;letter-spacing:-.5px}.klabel{font-size:12px;color:var(--muted)}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 7px;border-bottom:1px solid #edf0f5}th{font-size:11px;color:#7a8495;text-transform:uppercase}
-.metric{margin:13px 0}.metricHead{display:flex;justify-content:space-between;font-size:12px;font-weight:800}.bar{height:10px;background:#e9edf4;border-radius:20px;overflow:hidden;margin-top:6px}.bar div{height:100%;background:var(--brand)}
-.callout{border-left:4px solid var(--brand);background:#f8f8ff;padding:14px 16px;border-radius:0 12px 12px 0}.pill{display:inline-block;background:#eef0ff;color:#454bd8;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:800;margin:3px}
-.savedItem{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;border-bottom:1px solid #eef1f6}.savedItem:last-child{border-bottom:0}.savedMeta{font-size:12px;color:var(--muted)}
-footer{font-size:12px;color:#8992a4;line-height:1.5;margin-top:25px}
-@media(max-width:780px){.grid2,.grid3,.grid4,.features{grid-template-columns:1fr}.hero{padding:30px 22px}.hero h1{font-size:38px}.actions button{flex:1}.navRight .tag{display:none}}
-</style>
-</head>
-<body>
-<div class="shell">
-  <div class="nav">
-    <div class="logo">Worth<span>Switch</span></div>
-    <div class="navRight"><div class="tag">Hrvatska · v3</div><button class="ghost" onclick="showSaved()">Spremljene usporedbe</button></div>
-  </div>
+:root{--bg:#f5f7fb;--panel:#fff;--ink:#111827;--muted:#667085;--line:#e6eaf1;--brand:#5b61f6;--soft:#eef0ff;--dark:#0f172a}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink)}
+.wrap{max-width:1160px;margin:auto;padding:22px 16px 64px}.nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.logo{font-size:28px;font-weight:950}.logo span{color:var(--brand)}.tag{background:#e8f7ef;color:#16734a;padding:7px 10px;border-radius:999px;font-size:12px;font-weight:850}
+.hero{background:linear-gradient(135deg,#101828,#1f2937);color:#fff;padding:42px 34px;border-radius:28px}.hero h1{font-size:50px;line-height:1.02;letter-spacing:-1.8px;margin:0 0 14px;max-width:800px}.hero p{font-size:18px;line-height:1.6;color:#cbd5e1;max-width:760px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin:16px 0;box-shadow:0 8px 30px #1018280a}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+h2{font-size:25px;margin:0 0 7px}.muted,.note{color:var(--muted)}.note{font-size:12px;line-height:1.5}
+label{display:block;font-size:12px;font-weight:800;color:#596579;margin:12px 0 6px}input,select{width:100%;padding:12px 13px;border:1px solid #d9dfeb;border-radius:11px;font-size:15px;background:#fff}
+button{border:0;border-radius:12px;padding:13px 18px;font-weight:850;font-size:15px;cursor:pointer}.primary{background:var(--brand);color:white}.ghost{background:#edf1f6;color:#475467}.soft{background:var(--soft);color:#454bd8}.actions{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.hidden{display:none}
+.progress{height:6px;background:#e8ecf4;border-radius:10px;overflow:hidden;margin:8px 0 22px}.progress div{height:100%;background:var(--brand)}.subtle{background:#fafbfe;border:1px solid #eef1f6;border-radius:14px;padding:15px;margin-top:14px}
+.result{background:var(--dark);color:white;border-radius:24px;padding:28px}.result .big{font-size:40px;font-weight:950;line-height:1.05;margin:8px 0}.good{color:#59df93}.bad{color:#ff9098}.kpi{font-size:28px;font-weight:950}.klabel{font-size:12px;color:var(--muted)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:11px 7px;border-bottom:1px solid #edf0f5}th{font-size:11px;color:#7a8495;text-transform:uppercase}.metric{margin:13px 0}.metricHead{display:flex;justify-content:space-between;font-size:12px;font-weight:800}.bar{height:10px;background:#e9edf4;border-radius:20px;overflow:hidden;margin-top:6px}.bar div{height:100%;background:var(--brand)}.callout{border-left:4px solid var(--brand);background:#f8f8ff;padding:14px 16px;border-radius:0 12px 12px 0}.pill{display:inline-block;background:var(--soft);color:#454bd8;padding:6px 9px;border-radius:999px;font-size:12px;font-weight:800;margin:3px}
+.saved{padding:12px 0;border-bottom:1px solid #edf0f5}.saved:last-child{border-bottom:0}footer{font-size:12px;color:#8992a4;line-height:1.5;margin-top:24px}
+@media(max-width:780px){.grid2,.grid3,.grid4{grid-template-columns:1fr}.hero{padding:30px 22px}.hero h1{font-size:38px}.actions button{flex:1}}
+</style></head>
+<body><div class="wrap">
+<div class="nav"><div class="logo">Worth<span>Switch</span></div><div class="tag">Hrvatska · v4</div></div>
 
-  <section id="landing">
-    <div class="hero">
-      <h1>Nova plaća izgleda bolje. Ali je li novi posao stvarno bolji?</h1>
-      <p>WorthSwitch uspoređuje neto plaću, bonuse, neoporezive primitke, remote rad, godišnji, benefite, trošak putovanja i tvoje vrijeme — pa pokazuje koliko nova ponuda stvarno vrijedi.</p>
-      <div class="heroActions">
-        <button class="primary" onclick="start()">Usporedi poslove →</button>
-        <button class="light" onclick="showSaved()">Moje usporedbe</button>
-      </div>
-    </div>
-    <div class="features">
-      <div class="feature"><b>💶 Total Job Value</b><span>Ne gleda samo bruto plaću, nego cijeli paket i trošak rada.</span></div>
-      <div class="feature"><b>🎯 Koliko tražiti?</b><span>Izračunaj break-even i pregovarački cilj za novu ponudu.</span></div>
-      <div class="feature"><b>🏠 Vrijednost remote rada</b><span>Vrijeme putovanja pretvara u konkretan godišnji učinak.</span></div>
-    </div>
-  </section>
+<section id="landing">
+<div class="hero"><h1>Koliko nova ponuda stvarno vrijedi?</h1><p>V4 dodaje precizniji hrvatski porezni model, djecu i uzdržavane članove, invalidnost, lokalne porezne stope, spremanje usporedbi i break-even kalkulator.</p><button class="primary" onclick="start()">Pokreni usporedbu →</button></div>
+</section>
 
-  <section id="savedPanel" class="card hidden">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-      <div><h2>Spremljene usporedbe</h2><p class="muted">Spremaju se samo u ovom pregledniku.</p></div>
-      <button class="ghost" onclick="closeSaved()">Zatvori</button>
-    </div>
-    <div id="savedList"></div>
-  </section>
+<main id="app" class="hidden">
+<div id="stepLabel" class="note" style="font-weight:900"></div><div class="progress"><div id="prog"></div></div>
 
-  <main id="app" class="hidden">
-    <div id="stepLabel" class="note" style="font-weight:900"></div>
-    <div class="progress"><div id="prog"></div></div>
-
-    <section id="s1" class="card">
-      <h2>Prebivalište i porez</h2>
-      <p class="muted">Odaberi grad ili općinu. Za ostala mjesta možeš ručno unijeti važeće stope.</p>
-      <div class="grid2">
-        <div>
-          <label>Grad / općina</label>
-          <select id="city" onchange="applyCity()">
-            <option value="custom">Ručno / drugo mjesto</option>
-            <option value="zagreb">Zagreb</option>
-            <option value="split">Split</option>
-            <option value="rijeka">Rijeka</option>
-            <option value="osijek">Osijek</option>
-            <option value="bjelovar">Bjelovar</option>
-          </select>
-        </div>
-        <div>
-          <label>Osnovni osobni odbitak (€ / mj.)</label>
-          <input id="allowance" type="number" value="600">
-        </div>
-        <div><label>Niža stopa (%)</label><input id="taxLow" type="number" step=".1" value="20"></div>
-        <div><label>Viša stopa (%)</label><input id="taxHigh" type="number" step=".1" value="30"></div>
-      </div>
-      <div id="cityInfo" class="subtle note">Odaberi mjesto ili unesi stope ručno.</div>
-      <div class="actions"><span></span><button class="primary" onclick="go(2)">Dalje →</button></div>
-    </section>
-
-    <section id="s2" class="card hidden">
-      <h2>Trenutni posao</h2><p class="muted">Unesi cijeli paket, ne samo plaću.</p>
-      <div class="grid2">
-        <div><label>Bruto mjesečna plaća (€)</label><input id="cSalary" type="number" value="2777"></div>
-        <div><label>Broj plaća godišnje</label><input id="cMonths" type="number" value="12"></div>
-        <div><label>Godišnji bruto bonus (€)</label><input id="cBonus" type="number" value="0"></div>
-        <div><label>Ostali neoporezivi primici godišnje (€)</label><input id="cOther" type="number" value="0"></div>
-        <div><label>Regres (€)</label><input id="cRegres" type="number" value="0"></div>
-        <div><label>Božićnica (€)</label><input id="cBoz" type="number" value="0"></div>
-        <div><label>Uskrsnica (€)</label><input id="cUsk" type="number" value="0"></div>
-        <div><label>Prehrana mjesečno (€)</label><input id="cMeal" type="number" value="100"></div>
-        <div><label>Prijevoz koji firma isplaćuje mjesečno (€)</label><input id="cTravelPay" type="number" value="80"></div>
-        <div><label>Dani godišnjeg</label><input id="cVacation" type="number" value="25"></div>
-        <div><label>Remote dana tjedno</label><input id="cRemote" type="number" min="0" max="5" value="2"></div>
-        <div><label>Putovanje u jednom smjeru (min)</label><input id="cCommute" type="number" value="30"></div>
-        <div><label>Vlastiti trošak puta po danu u uredu (€)</label><input id="cTravelCost" type="number" value="5"></div>
-        <div><label>Vrijednost ostalih benefita godišnje (€)</label><input id="cBenefits" type="number" value="400"></div>
-      </div>
-      <div class="actions"><button class="ghost" onclick="go(1)">← Natrag</button><button class="primary" onclick="go(3)">Dalje →</button></div>
-    </section>
-
-    <section id="s3" class="card hidden">
-      <h2>Nova ponuda</h2><p class="muted">Unesi ono što ti nudi novi poslodavac.</p>
-      <div class="grid2">
-        <div><label>Bruto mjesečna plaća (€)</label><input id="nSalary" type="number" value="3400"></div>
-        <div><label>Broj plaća godišnje</label><input id="nMonths" type="number" value="12"></div>
-        <div><label>Godišnji bruto bonus (€)</label><input id="nBonus" type="number" value="1500"></div>
-        <div><label>Ostali neoporezivi primici godišnje (€)</label><input id="nOther" type="number" value="0"></div>
-        <div><label>Regres (€)</label><input id="nRegres" type="number" value="300"></div>
-        <div><label>Božićnica (€)</label><input id="nBoz" type="number" value="700"></div>
-        <div><label>Uskrsnica (€)</label><input id="nUsk" type="number" value="150"></div>
-        <div><label>Prehrana mjesečno (€)</label><input id="nMeal" type="number" value="100"></div>
-        <div><label>Prijevoz koji firma isplaćuje mjesečno (€)</label><input id="nTravelPay" type="number" value="80"></div>
-        <div><label>Dani godišnjeg</label><input id="nVacation" type="number" value="26"></div>
-        <div><label>Remote dana tjedno</label><input id="nRemote" type="number" min="0" max="5" value="3"></div>
-        <div><label>Putovanje u jednom smjeru (min)</label><input id="nCommute" type="number" value="20"></div>
-        <div><label>Vlastiti trošak puta po danu u uredu (€)</label><input id="nTravelCost" type="number" value="4"></div>
-        <div><label>Vrijednost ostalih benefita godišnje (€)</label><input id="nBenefits" type="number" value="500"></div>
-      </div>
-      <div class="subtle"><label>Koliko ti vrijedi jedan sat slobodnog vremena? (€)</label><input id="hourValue" type="number" value="10"></div>
-      <div class="actions"><button class="ghost" onclick="go(2)">← Natrag</button><button class="primary" onclick="calculate()">Izračunaj →</button></div>
-    </section>
-
-    <section id="s4" class="hidden">
-      <div id="heroResult" class="result"></div>
-      <div class="grid4">
-        <div class="card"><div class="kpi" id="kFin"></div><div class="klabel">financijska razlika / god.</div></div>
-        <div class="card"><div class="kpi" id="kTime"></div><div class="klabel">razlika vremena / god.</div></div>
-        <div class="card"><div class="kpi" id="kBreak"></div><div class="klabel">break-even bruto / mj.</div></div>
-        <div class="card"><div class="kpi" id="kScore"></div><div class="klabel">Job Score promjena</div></div>
-      </div>
-      <div class="card"><h2>Detaljna usporedba</h2><div id="table"></div></div>
-      <div class="grid2">
-        <div class="card"><h2>What-if simulator</h2><label>Nova bruto plaća</label><input id="simSalary" type="range" min="1000" max="7000" step="50" oninput="simulate()"><div class="kpi" id="simVal"></div><div id="simOut" class="callout"></div></div>
-        <div class="card"><h2>Koliko tražiti?</h2><div id="ask"></div></div>
-      </div>
-      <div class="grid2">
-        <div class="card"><h2>Vrijeme</h2><div id="time"></div></div>
-        <div class="card"><h2>Job Score</h2><div id="scores"></div></div>
-      </div>
-      <div class="card">
-        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-          <div><h2>Spremi ovu usporedbu</h2><p class="muted">Možeš je kasnije otvoriti na ovom uređaju.</p></div>
-          <button class="primary" onclick="saveComparison()">Spremi usporedbu</button>
-        </div>
-      </div>
-      <div class="actions"><button class="ghost" onclick="go(3)">← Uredi ponudu</button><button class="soft" onclick="window.print()">Ispis / PDF</button></div>
-    </section>
-  </main>
-
-  <footer>WorthSwitch MVP v3 · Hrvatska · 2026. Porezni rezultat je informativan; za produkciju treba održavati službenu bazu lokalnih stopa i dodatne porezne olakšice.</footer>
+<section id="s1" class="card">
+<h2>Porezni profil</h2><p class="muted">Odaberi provjereni preset ili ručno unesi stope za svoje prebivalište.</p>
+<div class="grid2">
+<div><label>Grad / općina</label><select id="city" onchange="applyCity()"><option value="custom">Ručno / drugo mjesto</option><option value="zagreb">Zagreb</option><option value="split">Split</option><option value="rijeka">Rijeka</option><option value="osijek">Osijek</option><option value="bjelovar">Bjelovar</option></select></div>
+<div><label>Naziv mjesta ako je ručni unos</label><input id="customCity" placeholder="npr. Lekenik"></div>
+<div><label>Niža stopa poreza (%)</label><input id="taxLow" type="number" step=".1" value="20"></div>
+<div><label>Viša stopa poreza (%)</label><input id="taxHigh" type="number" step=".1" value="30"></div>
 </div>
 
+<h3>Osobni odbitak i uzdržavani članovi</h3>
+<div class="grid3">
+<div><label>Uzdržavani članovi uže obitelji</label><input id="dependents" type="number" min="0" value="0"></div>
+<div><label>Broj uzdržavane djece</label><input id="children" type="number" min="0" max="12" value="0"></div>
+<div><label>Invalidnost poreznog obveznika</label><select id="disability"><option value="0">Nema</option><option value="180">Invalidnost — +180 €/mj.</option><option value="600">100% / propisana posebna prava — +600 €/mj.</option></select></div>
+</div>
+<div id="allowanceInfo" class="subtle note"></div>
+<div class="actions"><span></span><button class="primary" onclick="go(2)">Dalje →</button></div>
+</section>
+
+<section id="s2" class="card hidden"><h2>Trenutni posao</h2><div class="grid2">
+<div><label>Bruto mjesečna plaća (€)</label><input id="cSalary" type="number" value="2777"></div><div><label>Broj plaća godišnje</label><input id="cMonths" type="number" value="12"></div>
+<div><label>Godišnji bruto bonus (€)</label><input id="cBonus" type="number" value="0"></div><div><label>Ostali neoporezivi primici godišnje (€)</label><input id="cOther" type="number" value="0"></div>
+<div><label>Regres (€)</label><input id="cRegres" type="number" value="0"></div><div><label>Božićnica (€)</label><input id="cBoz" type="number" value="0"></div>
+<div><label>Uskrsnica (€)</label><input id="cUsk" type="number" value="0"></div><div><label>Prehrana mjesečno (€)</label><input id="cMeal" type="number" value="100"></div>
+<div><label>Prijevoz koji firma isplaćuje mjesečno (€)</label><input id="cTravelPay" type="number" value="80"></div><div><label>Dani godišnjeg</label><input id="cVacation" type="number" value="25"></div>
+<div><label>Remote dana tjedno</label><input id="cRemote" type="number" min="0" max="5" value="2"></div><div><label>Putovanje u jednom smjeru (min)</label><input id="cCommute" type="number" value="30"></div>
+<div><label>Vlastiti trošak puta po danu u uredu (€)</label><input id="cTravelCost" type="number" value="5"></div><div><label>Vrijednost ostalih benefita godišnje (€)</label><input id="cBenefits" type="number" value="400"></div>
+</div><div class="actions"><button class="ghost" onclick="go(1)">← Natrag</button><button class="primary" onclick="go(3)">Dalje →</button></div></section>
+
+<section id="s3" class="card hidden"><h2>Nova ponuda</h2><div class="grid2">
+<div><label>Bruto mjesečna plaća (€)</label><input id="nSalary" type="number" value="3400"></div><div><label>Broj plaća godišnje</label><input id="nMonths" type="number" value="12"></div>
+<div><label>Godišnji bruto bonus (€)</label><input id="nBonus" type="number" value="1500"></div><div><label>Ostali neoporezivi primici godišnje (€)</label><input id="nOther" type="number" value="0"></div>
+<div><label>Regres (€)</label><input id="nRegres" type="number" value="300"></div><div><label>Božićnica (€)</label><input id="nBoz" type="number" value="700"></div>
+<div><label>Uskrsnica (€)</label><input id="nUsk" type="number" value="150"></div><div><label>Prehrana mjesečno (€)</label><input id="nMeal" type="number" value="100"></div>
+<div><label>Prijevoz koji firma isplaćuje mjesečno (€)</label><input id="nTravelPay" type="number" value="80"></div><div><label>Dani godišnjeg</label><input id="nVacation" type="number" value="26"></div>
+<div><label>Remote dana tjedno</label><input id="nRemote" type="number" min="0" max="5" value="3"></div><div><label>Putovanje u jednom smjeru (min)</label><input id="nCommute" type="number" value="20"></div>
+<div><label>Vlastiti trošak puta po danu u uredu (€)</label><input id="nTravelCost" type="number" value="4"></div><div><label>Vrijednost ostalih benefita godišnje (€)</label><input id="nBenefits" type="number" value="500"></div>
+</div><div class="subtle"><label>Vrijednost jednog sata slobodnog vremena (€)</label><input id="hourValue" type="number" value="10"></div>
+<div class="actions"><button class="ghost" onclick="go(2)">← Natrag</button><button class="primary" onclick="calculate()">Izračunaj →</button></div></section>
+
+<section id="s4" class="hidden">
+<div id="heroResult" class="result"></div>
+<div class="grid4"><div class="card"><div class="kpi" id="kFin"></div><div class="klabel">financijska razlika / god.</div></div><div class="card"><div class="kpi" id="kTime"></div><div class="klabel">razlika vremena / god.</div></div><div class="card"><div class="kpi" id="kBreak"></div><div class="klabel">break-even bruto / mj.</div></div><div class="card"><div class="kpi" id="kScore"></div><div class="klabel">Job Score promjena</div></div></div>
+<div class="card"><h2>Detaljna usporedba</h2><div id="table"></div></div>
+<div class="grid2"><div class="card"><h2>What-if</h2><label>Nova bruto plaća</label><input id="simSalary" type="range" min="1000" max="7000" step="50" oninput="simulate()"><div class="kpi" id="simVal"></div><div id="simOut" class="callout"></div></div><div class="card"><h2>Koliko tražiti?</h2><div id="ask"></div></div></div>
+<div class="grid2"><div class="card"><h2>Vrijeme</h2><div id="time"></div></div><div class="card"><h2>Job Score</h2><div id="scores"></div></div></div>
+<div class="card"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><div><h2>Spremi usporedbu</h2><p class="muted">Sprema se lokalno u ovom pregledniku.</p></div><button class="primary" onclick="saveComparison()">Spremi</button></div><div id="savedList"></div></div>
+<div class="actions"><button class="ghost" onclick="go(3)">← Uredi ponudu</button><button class="soft" onclick="window.print()">Ispis / PDF</button></div>
+</section>
+</main>
+<footer>WorthSwitch v4 · informativni kalkulator za Hrvatsku. Porezne stope po mjestu treba redovito provjeravati i ažurirati prema odlukama lokalne samouprave.</footer>
+</div>
 <script>
-const $=id=>document.getElementById(id), n=id=>Number($(id).value)||0;
-let last={};
-
-const cityRates={
-  zagreb:{name:'Zagreb',low:23,high:33,source:'Preset 2026: 23% / 33%'},
-  split:{name:'Split',low:21.5,high:32,source:'Preset 2026: 21,5% / 32%'},
-  rijeka:{name:'Rijeka',low:20,high:25,source:'Preset 2026: 20% / 25%'},
-  osijek:{name:'Osijek',low:20,high:30,source:'Preset 2026: 20% / 30%'},
-  bjelovar:{name:'Bjelovar',low:18,high:25,source:'Preset 2026: 18% / 25%'}
-};
-
-function start(){$('landing').classList.add('hidden');$('savedPanel').classList.add('hidden');$('app').classList.remove('hidden');go(1)}
-function go(x){[1,2,3,4].forEach(i=>$('s'+i).classList.toggle('hidden',i!==x));$('stepLabel').textContent=x+' / 4 — '+['Prebivalište i porez','Trenutni posao','Nova ponuda','Rezultat'][x-1];$('prog').style.width=(x*25)+'%';window.scrollTo({top:0,behavior:'smooth'})}
-function applyCity(){let v=$('city').value;if(v==='custom'){$('cityInfo').textContent='Ručno unesite stope koje vrijede za vaše prebivalište.';return}let c=cityRates[v];$('taxLow').value=c.low;$('taxHigh').value=c.high;$('cityInfo').textContent=c.name+' · '+c.source}
-function euro(x){return new Intl.NumberFormat('hr-HR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(x)}
-function net(g){let mio=g*.20,base=Math.max(0,g-mio-n('allowance')),lo=Math.min(base,5000),hi=Math.max(0,base-5000),tax=lo*n('taxLow')/100+hi*n('taxHigh')/100;return Math.max(0,g-mio-tax)}
+const $=id=>document.getElementById(id), N=id=>Number($(id).value)||0;let last={};
+const rates={zagreb:[23,33],split:[21.5,32],rijeka:[20,25],osijek:[20,30],bjelovar:[18,25]};
+function start(){$('landing').classList.add('hidden');$('app').classList.remove('hidden');go(1);updateAllowance()}
+function go(x){[1,2,3,4].forEach(i=>$('s'+i).classList.toggle('hidden',i!==x));$('stepLabel').textContent=x+' / 4 — '+['Porezni profil','Trenutni posao','Nova ponuda','Rezultat'][x-1];$('prog').style.width=x*25+'%';window.scrollTo({top:0,behavior:'smooth'});if(x===1)updateAllowance()}
+function applyCity(){let v=$('city').value;if(rates[v]){[$('taxLow').value,$('taxHigh').value]=rates[v]} }
+function childAllowance(k){const vals=[300,420,600,840,1140,1500,1920,2400,2940];let s=0;for(let i=0;i<k;i++){if(i<vals.length)s+=vals[i];else s+=vals[vals.length-1]+660*(i-8)}return s}
+function allowance(){return 600+N('dependents')*300+childAllowance(N('children'))+N('disability')}
+function updateAllowance(){$('allowanceInfo').innerHTML='Procijenjeni osobni odbitak: <b>'+fmt(allowance())+' mjesečno</b>. Osnova: 600 € + uzdržavani članovi + djeca + eventualna invalidnost.'}
+['dependents','children','disability'].forEach(id=>document.addEventListener('input',e=>{if(e.target&&e.target.id===id)updateAllowance()}))
+function fmt(x){return new Intl.NumberFormat('hr-HR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(x)}
+function net(g){let mio=g*.20,base=Math.max(0,g-mio-allowance()),lo=Math.min(base,5000),hi=Math.max(0,base-5000),tax=lo*N('taxLow')/100+hi*N('taxHigh')/100;return Math.max(0,g-mio-tax)}
 function bonusNet(b){if(!b)return 0;let m=b/12;return Math.max(0,(net(m+2500)-net(2500))*12)}
-function raw(p){return{salary:n(p+'Salary'),months:n(p+'Months'),bonus:n(p+'Bonus'),other:n(p+'Other'),regres:n(p+'Regres'),boz:n(p+'Boz'),usk:n(p+'Usk'),meal:n(p+'Meal'),travelPay:n(p+'TravelPay'),vacation:n(p+'Vacation'),remote:n(p+'Remote'),commute:n(p+'Commute'),travelCost:n(p+'TravelCost'),benefits:n(p+'Benefits')}}
-function calc(j){let netSalary=net(j.salary)*j.months,nb=bonusNet(j.bonus),direct=j.other+j.regres+j.boz+j.usk+j.meal*12+j.travelPay*12,office=Math.max(0,(5-j.remote)*52),hours=office*j.commute*2/60,cost=office*j.travelCost,cash=netSalary+nb+direct,financial=cash+j.benefits-cost,total=financial-hours*n('hourValue'),sm=Math.min(100,cash/520),sf=Math.min(100,j.remote/5*100),st=Math.max(0,100-hours/3),sv=Math.min(100,j.vacation/30*100),score=Math.round(sm*.45+sf*.2+st*.2+sv*.15);return{...j,netSalary,nb,direct,office,hours,cost,cash,financial,total,sm,sf,st,sv,score}}
+function raw(p){return{salary:N(p+'Salary'),months:N(p+'Months'),bonus:N(p+'Bonus'),other:N(p+'Other'),regres:N(p+'Regres'),boz:N(p+'Boz'),usk:N(p+'Usk'),meal:N(p+'Meal'),travelPay:N(p+'TravelPay'),vacation:N(p+'Vacation'),remote:N(p+'Remote'),commute:N(p+'Commute'),travelCost:N(p+'TravelCost'),benefits:N(p+'Benefits')}}
+function calc(j){let ns=net(j.salary)*j.months,nb=bonusNet(j.bonus),direct=j.other+j.regres+j.boz+j.usk+j.meal*12+j.travelPay*12,office=Math.max(0,(5-j.remote)*52),hours=office*j.commute*2/60,cost=office*j.travelCost,cash=ns+nb+direct,financial=cash+j.benefits-cost,total=financial-hours*N('hourValue'),sm=Math.min(100,cash/520),sf=Math.min(100,j.remote/5*100),st=Math.max(0,100-hours/3),sv=Math.min(100,j.vacation/30*100),score=Math.round(sm*.45+sf*.2+st*.2+sv*.15);return{...j,ns,nb,direct,office,hours,cost,cash,financial,total,sm,sf,st,sv,score}}
 function breakEven(c,r){let lo=500,hi=10000;for(let i=0;i<45;i++){let m=(lo+hi)/2;if(calc({...r,salary:m}).total>=c.total)hi=m;else lo=m}return hi}
-function calculate(){let cr=raw('c'),nr=raw('n'),c=calc(cr),nn=calc(nr),d=nn.total-c.total,fd=nn.financial-c.financial,saved=c.hours-nn.hours,be=breakEven(c,nr),pct=c.total?d/c.total*100:0;last={cr,nr,c,nn,be,d,fd,saved,pct,city:$('city').value,taxLow:n('taxLow'),taxHigh:n('taxHigh'),allowance:n('allowance'),hourValue:n('hourValue')};
-$('heroResult').innerHTML='<div class="eyebrow">WORTHSWITCH REZULTAT</div><div class="big '+(d>=0?'good':'bad')+'">'+(d>=0?'Nova ponuda se isplati':'Trenutni posao ima veću vrijednost')+'</div><div style="font-size:20px;font-weight:800">'+(d>=0?'+':'')+euro(d)+' godišnje · '+(pct>=0?'+':'')+pct.toFixed(1)+'%</div><p style="color:#b7c0d0;margin-bottom:0">Total Job Value uključuje financije, benefite, trošak putovanja i tvoju vrijednost vremena.</p>';
-$('kFin').textContent=(fd>=0?'+':'')+euro(fd);$('kTime').textContent=(saved>=0?'+':'')+Math.round(saved)+' h';$('kBreak').textContent=euro(be);$('kScore').textContent=(nn.score-c.score>=0?'+':'')+(nn.score-c.score);
-$('table').innerHTML='<table><tr><th></th><th>Trenutni</th><th>Nova ponuda</th></tr><tr><td>Procijenjena neto plaća</td><td>'+euro(c.netSalary)+'</td><td>'+euro(nn.netSalary)+'</td></tr><tr><td>Procijenjeni neto bonus</td><td>'+euro(c.nb)+'</td><td>'+euro(nn.nb)+'</td></tr><tr><td>Direktni primici</td><td>'+euro(c.direct)+'</td><td>'+euro(nn.direct)+'</td></tr><tr><td>Benefiti</td><td>'+euro(c.benefits)+'</td><td>'+euro(nn.benefits)+'</td></tr><tr><td>Vlastiti trošak putovanja</td><td>-'+euro(c.cost)+'</td><td>-'+euro(nn.cost)+'</td></tr><tr><th>Financijska vrijednost</th><th>'+euro(c.financial)+'</th><th>'+euro(nn.financial)+'</th></tr><tr><td>Vrijednost vremena</td><td>-'+euro(c.hours*n('hourValue'))+'</td><td>-'+euro(nn.hours*n('hourValue'))+'</td></tr><tr><th>Total Job Value</th><th>'+euro(c.total)+'</th><th>'+euro(nn.total)+'</th></tr></table>';
-$('simSalary').value=Math.min(7000,Math.max(1000,nr.salary));simulate();let min=Math.ceil(be/50)*50,fair=Math.ceil(be*1.05/50)*50,excellent=Math.ceil(be*1.10/50)*50;$('ask').innerHTML='<p><span class="pill">Minimalno '+euro(min)+'</span><span class="pill">Fer cilj '+euro(fair)+'</span><span class="pill">Odlično '+euro(excellent)+'+</span></p><div class="callout">Uz ostale uvjete iz ponude, procijenjeni break-even je <b>'+euro(min)+' bruto mjesečno</b>.</div>';
+function calculate(){let cr=raw('c'),nr=raw('n'),c=calc(cr),nn=calc(nr),d=nn.total-c.total,fd=nn.financial-c.financial,saved=c.hours-nn.hours,be=breakEven(c,nr),pct=c.total?d/c.total*100:0;last={cr,nr,c,nn,d,fd,saved,be,pct};
+$('heroResult').innerHTML='<div style="font-size:12px;font-weight:900;color:#aeb7c7">WORTHSWITCH REZULTAT</div><div class="big '+(d>=0?'good':'bad')+'">'+(d>=0?'Nova ponuda se isplati':'Trenutni posao ima veću vrijednost')+'</div><div style="font-size:20px;font-weight:800">'+(d>=0?'+':'')+fmt(d)+' godišnje · '+(pct>=0?'+':'')+pct.toFixed(1)+'%</div>';
+$('kFin').textContent=(fd>=0?'+':'')+fmt(fd);$('kTime').textContent=(saved>=0?'+':'')+Math.round(saved)+' h';$('kBreak').textContent=fmt(be);$('kScore').textContent=(nn.score-c.score>=0?'+':'')+(nn.score-c.score);
+$('table').innerHTML='<table><tr><th></th><th>Trenutni</th><th>Nova ponuda</th></tr><tr><td>Neto plaća</td><td>'+fmt(c.ns)+'</td><td>'+fmt(nn.ns)+'</td></tr><tr><td>Neto bonus</td><td>'+fmt(c.nb)+'</td><td>'+fmt(nn.nb)+'</td></tr><tr><td>Direktni primici</td><td>'+fmt(c.direct)+'</td><td>'+fmt(nn.direct)+'</td></tr><tr><td>Benefiti</td><td>'+fmt(c.benefits)+'</td><td>'+fmt(nn.benefits)+'</td></tr><tr><td>Trošak putovanja</td><td>-'+fmt(c.cost)+'</td><td>-'+fmt(nn.cost)+'</td></tr><tr><th>Financijska vrijednost</th><th>'+fmt(c.financial)+'</th><th>'+fmt(nn.financial)+'</th></tr><tr><td>Vrijednost vremena</td><td>-'+fmt(c.hours*N('hourValue'))+'</td><td>-'+fmt(nn.hours*N('hourValue'))+'</td></tr><tr><th>Total Job Value</th><th>'+fmt(c.total)+'</th><th>'+fmt(nn.total)+'</th></tr></table>';
+$('simSalary').value=Math.min(7000,Math.max(1000,nr.salary));simulate();let min=Math.ceil(be/50)*50,fair=Math.ceil(be*1.05/50)*50,exc=Math.ceil(be*1.10/50)*50;$('ask').innerHTML='<span class="pill">Minimalno '+fmt(min)+'</span><span class="pill">Fer '+fmt(fair)+'</span><span class="pill">Odlično '+fmt(exc)+'+</span><div class="callout" style="margin-top:10px">Procijenjeni break-even: <b>'+fmt(min)+' bruto mjesečno</b>.</div>';
 $('time').innerHTML='<div class="grid3"><div><div class="kpi">'+Math.round(c.hours)+'</div><div class="klabel">sati sada</div></div><div><div class="kpi">'+Math.round(nn.hours)+'</div><div class="klabel">sati novo</div></div><div><div class="kpi">'+(saved>=0?'+':'')+Math.round(saved)+'</div><div class="klabel">razlika</div></div></div>';
-let rows=[['Novac',c.sm,nn.sm],['Fleksibilnost',c.sf,nn.sf],['Vrijeme',c.st,nn.st],['Godišnji',c.sv,nn.sv]];$('scores').innerHTML=rows.map(r=>'<div class="metric"><div class="metricHead"><span>'+r[0]+'</span><span>'+Math.round(r[1])+' → '+Math.round(r[2])+'</span></div><div class="bar"><div style="width:'+r[2]+'%"></div></div></div>').join('')+'<div class="callout"><b>Ukupno:</b> '+c.score+' → '+nn.score+' / 100</div>';go(4)}
-function simulate(){if(!last.c)return;let s=n('simSalary'),x=calc({...last.nr,salary:s}),d=x.total-last.c.total;$('simVal').textContent=euro(s)+' bruto / mj.';$('simOut').innerHTML=d>=0?'<b>Isplati se.</b> Prednost: <b>'+euro(d)+'/god.</b>':'<b>Još se ne isplati.</b> Manjak: <b>'+euro(Math.abs(d))+'/god.</b>'}
-function saveComparison(){if(!last.c)return;let arr=JSON.parse(localStorage.getItem('worthswitchComparisons')||'[]');arr.unshift({id:Date.now(),date:new Date().toLocaleString('hr-HR'),city:last.city,currentSalary:last.cr.salary,newSalary:last.nr.salary,diff:last.d,pct:last.pct,be:last.be});arr=arr.slice(0,20);localStorage.setItem('worthswitchComparisons',JSON.stringify(arr));alert('Usporedba je spremljena na ovom uređaju.')}
-function showSaved(){$('savedPanel').classList.remove('hidden');renderSaved();window.scrollTo({top:0,behavior:'smooth'})}
-function closeSaved(){$('savedPanel').classList.add('hidden')}
-function renderSaved(){let arr=JSON.parse(localStorage.getItem('worthswitchComparisons')||'[]'),box=$('savedList');if(!arr.length){box.innerHTML='<p class="muted">Još nema spremljenih usporedbi.</p>';return}box.innerHTML=arr.map(x=>'<div class="savedItem"><div><b>'+euro(x.currentSalary)+' → '+euro(x.newSalary)+' bruto/mj.</b><div class="savedMeta">'+x.date+' · rezultat '+(x.diff>=0?'+':'')+euro(x.diff)+'/god. · break-even '+euro(x.be)+'</div></div><button class="ghost" onclick="deleteSaved('+x.id+')">Obriši</button></div>').join('')}
-function deleteSaved(id){let arr=JSON.parse(localStorage.getItem('worthswitchComparisons')||'[]').filter(x=>x.id!==id);localStorage.setItem('worthswitchComparisons',JSON.stringify(arr));renderSaved()}
-</script>
-</body>
-</html>
+let rows=[['Novac',c.sm,nn.sm],['Fleksibilnost',c.sf,nn.sf],['Vrijeme',c.st,nn.st],['Godišnji',c.sv,nn.sv]];$('scores').innerHTML=rows.map(r=>'<div class="metric"><div class="metricHead"><span>'+r[0]+'</span><span>'+Math.round(r[1])+' → '+Math.round(r[2])+'</span></div><div class="bar"><div style="width:'+r[2]+'%"></div></div></div>').join('')+'<div class="callout"><b>Ukupno:</b> '+c.score+' → '+nn.score+' / 100</div>';renderSaved();go(4)}
+function simulate(){if(!last.c)return;let s=N('simSalary'),x=calc({...last.nr,salary:s}),d=x.total-last.c.total;$('simVal').textContent=fmt(s)+' bruto / mj.';$('simOut').innerHTML=d>=0?'<b>Isplati se.</b> Prednost '+fmt(d)+'/god.':'<b>Još se ne isplati.</b> Manjak '+fmt(Math.abs(d))+'/god.'}
+function saveComparison(){if(!last.c)return;let a=JSON.parse(localStorage.getItem('ws4')||'[]');a.unshift({id:Date.now(),when:new Date().toLocaleString('hr-HR'),c:last.cr.salary,n:last.nr.salary,d:last.d,be:last.be});localStorage.setItem('ws4',JSON.stringify(a.slice(0,20)));renderSaved()}
+function renderSaved(){let a=JSON.parse(localStorage.getItem('ws4')||'[]');$('savedList').innerHTML=a.length?'<h3>Spremljeno</h3>'+a.map(x=>'<div class="saved"><b>'+fmt(x.c)+' → '+fmt(x.n)+'</b> · '+(x.d>=0?'+':'')+fmt(x.d)+'/god.<div class="note">'+x.when+' · break-even '+fmt(x.be)+'</div></div>').join(''):'<p class="note">Nema spremljenih usporedbi.</p>'}
+</script></body></html>
