@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="hr">
 <head>
@@ -25,9 +26,13 @@
 </head>
 
 <body>
+
   <div class="app-shell">
 
+    <!-- TOP BAR -->
+
     <header class="topbar">
+
       <a
         class="brand"
         href="#"
@@ -38,6 +43,7 @@
       </a>
 
       <div class="top-actions">
+
         <button
           class="btn btn-ghost"
           id="installBtn"
@@ -52,7 +58,9 @@
         >
           Spremljeno
         </button>
+
       </div>
+
     </header>
 
 
@@ -78,6 +86,7 @@
         </p>
 
         <div class="hero-actions">
+
           <button
             class="btn btn-primary btn-lg"
             onclick="startFlow()"
@@ -91,6 +100,7 @@
           >
             Nastavi zadnju usporedbu
           </button>
+
         </div>
 
         <div class="trust-row">
@@ -151,10 +161,12 @@
     <section id="savedPanel" class="panel hidden">
 
       <div class="section-head">
+
         <div>
           <div class="eyebrow dark">
             LOKALNO SPREMLJENO
           </div>
+
           <h2>Moje usporedbe</h2>
         </div>
 
@@ -164,6 +176,7 @@
         >
           Zatvori
         </button>
+
       </div>
 
       <div id="savedList"></div>
@@ -178,6 +191,7 @@
       <div class="wizard-head">
 
         <div>
+
           <div
             class="eyebrow dark"
             id="stepLabel"
@@ -186,6 +200,7 @@
           <div class="progress">
             <div id="progressBar"></div>
           </div>
+
         </div>
 
         <div class="autosave">
@@ -210,6 +225,7 @@
         <div class="grid2">
 
           <div>
+
             <label>Grad / općina</label>
 
             <select
@@ -241,10 +257,12 @@
                 Bjelovar
               </option>
             </select>
+
           </div>
 
 
           <div>
+
             <label>Naziv mjesta</label>
 
             <input
@@ -253,10 +271,12 @@
               placeholder="npr. Lekenik"
               autocomplete="off"
             >
+
           </div>
 
 
           <div>
+
             <label>Niža stopa (%)</label>
 
             <input
@@ -268,10 +288,12 @@
               max="40"
               value="20"
             >
+
           </div>
 
 
           <div>
+
             <label>Viša stopa (%)</label>
 
             <input
@@ -283,6 +305,7 @@
               max="50"
               value="30"
             >
+
           </div>
 
         </div>
@@ -301,6 +324,7 @@
         <div class="grid3">
 
           <div>
+
             <label>Uzdržavani članovi</label>
 
             <input
@@ -311,10 +335,12 @@
               max="20"
               value="0"
             >
+
           </div>
 
 
           <div>
+
             <label>Broj djece</label>
 
             <input
@@ -325,10 +351,12 @@
               max="20"
               value="0"
             >
+
           </div>
 
 
           <div>
+
             <label>Invalidnost</label>
 
             <select
@@ -347,6 +375,7 @@
                 +600 €/mj. — propisani slučajevi
               </option>
             </select>
+
           </div>
 
         </div>
@@ -355,6 +384,7 @@
         <div class="grid2">
 
           <div>
+
             <label>
               Umanjenje godišnjeg poreza za mlade (2026.)
             </label>
@@ -375,10 +405,12 @@
                 50% — godište 1996.–2000.
               </option>
             </select>
+
           </div>
 
 
           <div>
+
             <label>
               Procjena blagdana koji padaju na radni dan
             </label>
@@ -391,6 +423,7 @@
               max="20"
               value="10"
             >
+
           </div>
 
         </div>
@@ -403,6 +436,7 @@
 
 
         <div class="step-actions">
+
           <span></span>
 
           <button
@@ -411,6 +445,7 @@
           >
             Dalje →
           </button>
+
         </div>
 
       </section>
@@ -424,13 +459,17 @@
       >
 
         <div class="section-head">
+
           <div>
+
             <div class="eyebrow dark">
               OPCIJA A
             </div>
 
             <h2>Trenutni posao</h2>
+
           </div>
+
         </div>
 
 
@@ -476,13 +515,17 @@
       >
 
         <div class="section-head">
+
           <div>
+
             <div class="eyebrow dark">
               OPCIJA B
             </div>
 
             <h2>Nova ponuda</h2>
+
           </div>
+
         </div>
 
 
@@ -560,6 +603,7 @@
         <div class="kpi-grid">
 
           <div class="kpi-card">
+
             <div
               class="kpi"
               id="kFin"
@@ -568,10 +612,12 @@
             <div class="kpi-label">
               financijska razlika / god.
             </div>
+
           </div>
 
 
           <div class="kpi-card">
+
             <div
               class="kpi"
               id="kTime"
@@ -580,10 +626,12 @@
             <div class="kpi-label">
               razlika vremena / god.
             </div>
+
           </div>
 
 
           <div class="kpi-card">
+
             <div
               class="kpi"
               id="kBreak"
@@ -597,10 +645,12 @@
               Najniža približna bruto plaća nove ponude
               pri kojoj je Total Job Value jednak.
             </div>
+
           </div>
 
 
           <div class="kpi-card">
+
             <div
               class="kpi"
               id="kScore"
@@ -613,21 +663,26 @@
             <div class="kpi-help">
               Heuristički indikator kvalitete paketa.
             </div>
+
           </div>
 
         </div>
 
+
+        <!-- DETAIL COMPARISON -->
 
         <section class="panel">
 
           <div class="section-head">
 
             <div>
+
               <h2>Detaljna usporedba</h2>
 
               <p class="muted">
                 Godišnja vrijednost obje opcije.
               </p>
+
             </div>
 
             <button
@@ -645,8 +700,9 @@
         </section>
 
 
-        <div class="grid2">
+        <!-- SIMULATOR + ASK -->
 
+        <div class="grid2">
 
           <section class="panel">
 
@@ -697,6 +753,8 @@
         </div>
 
 
+        <!-- TIME + SCORE -->
+
         <div class="grid2">
 
           <section class="panel">
@@ -728,6 +786,123 @@
           </section>
 
         </div>
+
+
+        <!-- SAVE -->
+
+        <section class="panel">
+
+          <div class="section-head">
+
+            <div>
+
+              <h2>Spremi usporedbu</h2>
+
+              <p class="muted">
+                Sprema se samo lokalno na ovom uređaju.
+              </p>
+
+            </div>
+
+            <button
+              class="btn btn-primary"
+              onclick="saveComparison()"
+            >
+              Spremi
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- IMPORTANT -->
+
+        <section class="panel">
+
+          <h2>Važno o izračunu</h2>
+
+          <p class="muted">
+            WorthSwitch daje informativnu godišnju procjenu.
+            Model za 2026. koristi osnovni osobni odbitak
+            600 € mjesečno, godišnji prag 60.000 €
+            između niže i više porezne stope te
+            porezne stope koje korisnik odabere ili ručno unese.
+          </p>
+
+          <p class="muted">
+            Model ne zamjenjuje službeni obračun plaće,
+            obračun poslodavca, Poreznu upravu niti
+            individualni porezni ili financijski savjet.
+          </p>
+
+          <p class="muted">
+            Neoporezivi primitci ne provjeravaju se automatski
+            prema zakonskim limitima. Unesi iznos koji stvarno
+            očekuješ da će biti isplaćen neoporezivo.
+          </p>
+
+        </section>
+
+
+        <!-- STEP 4 NAVIGATION -->
+
+        <div class="step-actions">
+
+          <button
+            class="btn btn-ghost"
+            onclick="goTo(3)"
+          >
+            ← Natrag na novu ponudu
+          </button>
+
+
+          <div class="action-group">
+
+            <button
+              class="btn btn-soft"
+              onclick="shareResult()"
+            >
+              Podijeli
+            </button>
+
+            <button
+              class="btn btn-soft"
+              onclick="window.print()"
+            >
+              PDF / ispis
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+      <strong>WorthSwitch v5.3</strong>
+      · Hrvatska
+      · porezni model 2026.
+      · informativni kalkulator.
+
+      <br>
+
+      Usporedba uključuje godišnju procjenu neto primanja,
+      neoporezive primitke, benefite, putovanje,
+      vrijednost vremena i druge unesene parametre.
+
+    </footer>
+
+  </div>
+
+
   <script src="app.js"></script>
+
 </body>
-      </html>
+</html>              
