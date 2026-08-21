@@ -205,7 +205,7 @@ function updateWorkLifeLabels() {
 
       if (help) {
         help.textContent =
-          'Heuristički indikator kvalitete radnih uvjeta.';
+          'Indikativna ocjena fleksibilnosti, putovanja, godišnjeg i benefita - nije dio Total Job Value izračuna.';
       }
     }
   }
