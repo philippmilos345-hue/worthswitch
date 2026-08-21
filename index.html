@@ -8,7 +8,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon-192.png">
   <link rel="stylesheet" href="styles.css">
-  <title>WorthSwitch Hrvatska v5.1</title>
+  <title>WorthSwitch Hrvatska v5.2</title>
 </head>
 <body>
   <div class="app-shell">
@@ -22,7 +22,7 @@
 
     <section id="landing" class="landing">
       <div class="hero-card">
-        <div class="eyebrow">HRVATSKA · V5.1</div>
+        <div class="eyebrow">HRVATSKA · V5.2</div>
         <h1>Nova plaća može biti veća, a posao ipak lošiji.</h1>
         <p>WorthSwitch uspoređuje plaću, bonus, neoporezive primitke, remote rad, godišnji, benefite, putovanje i tvoje vrijeme — pa pokazuje ukupnu vrijednost obje opcije.</p>
         <div class="hero-actions">
@@ -58,7 +58,8 @@
 
       <section id="step1" class="panel step">
         <h2>Porezni profil</h2>
-        <p class="muted">Odaberi grad ili ručno unesi lokalne stope poreza.</p>
+        <p class="muted">Odaberi preset ili ručno unesi važeće lokalne stope poreza prema prebivalištu.</p>
+
         <div class="grid2">
           <div><label>Grad / općina</label>
             <select id="city" data-save onchange="applyCity()">
@@ -71,8 +72,12 @@
             </select>
           </div>
           <div><label>Naziv mjesta</label><input id="customCity" data-save placeholder="npr. Lekenik"></div>
-          <div><label>Niža stopa (%)</label><input id="taxLow" data-save type="number" step=".1" value="20"></div>
-          <div><label>Viša stopa (%)</label><input id="taxHigh" data-save type="number" step=".1" value="30"></div>
+          <div><label>Niža stopa (%)</label><input id="taxLow" data-save type="number" step=".1" min="0" max="40" value="20"></div>
+          <div><label>Viša stopa (%)</label><input id="taxHigh" data-save type="number" step=".1" min="0" max="50" value="30"></div>
+        </div>
+
+        <div class="info-box">
+          Lokalnu stopu određuje grad/općina. Ako nisi siguran u preset, odaberi <b>Ručno / drugo mjesto</b> i unesi važeće stope.
         </div>
 
         <h3>Osobni odbitak</h3>
@@ -83,31 +88,33 @@
             <select id="disability" data-save>
               <option value="0">Nema</option>
               <option value="180">+180 €/mj.</option>
-              <option value="600">+600 €/mj.</option>
+              <option value="600">+600 €/mj. (100% / propisana posebna prava)</option>
             </select>
           </div>
         </div>
+
         <div class="grid2">
-  <div>
-    <label>Umanjenje godišnjeg poreza za mlade (2026.)</label>
-    <select id="youthRelief" data-save>
-      <option value="0">Ne primjenjuj / ne ispunjavam uvjet</option>
-      <option value="1">100% — godište 2001. ili mlađe</option>
-      <option value="0.5">50% — godište 1996.–2000.</option>
-    </select>
-  </div>
-  <div>
-    <label>Procjena blagdana koji padaju na radni dan</label>
-    <input id="weekdayHolidays" data-save type="number" min="0" max="20" value="10">
-  </div>
-</div>
-<div id="allowanceInfo" class="info-box"></div>
+          <div>
+            <label>Umanjenje godišnjeg poreza za mlade (2026.)</label>
+            <select id="youthRelief" data-save>
+              <option value="0">Ne primjenjuj / ne ispunjavam uvjet</option>
+              <option value="1">100% — godište 2001. ili mlađe</option>
+              <option value="0.5">50% — godište 1996.–2000.</option>
+            </select>
+          </div>
+          <div>
+            <label>Procjena blagdana koji padaju na radni dan</label>
+            <input id="weekdayHolidays" data-save type="number" min="0" max="20" value="10">
+          </div>
+        </div>
+
+        <div id="allowanceInfo" class="info-box"></div>
         <div class="step-actions"><span></span><button class="btn btn-primary" onclick="goTo(2)">Dalje →</button></div>
       </section>
 
       <section id="step2" class="panel step hidden">
         <h2>Trenutni posao</h2>
-        <p class="muted">Unesi cijeli godišnji paket.</p>
+        <p class="muted">Unesi cijeli godišnji paket. Kod neoporezivih primitaka unesi iznos koji stvarno očekuješ da će ti biti isplaćen neoporezivo.</p>
         <div class="grid2 job-grid" data-prefix="c"></div>
         <div class="step-actions"><button class="btn btn-ghost" onclick="goTo(1)">← Natrag</button><button class="btn btn-primary" onclick="goTo(3)">Dalje →</button></div>
       </section>
@@ -116,7 +123,11 @@
         <h2>Nova ponuda</h2>
         <p class="muted">Unesi novu ponudu. Nepoznate stavke možeš ostaviti na 0.</p>
         <div class="grid2 job-grid" data-prefix="n"></div>
-        <div class="info-box"><label>Koliko ti vrijedi jedan sat slobodnog vremena? (€)</label><input id="hourValue" data-save type="number" value="10"></div>
+        <div class="info-box">
+          <label>Koliko ti vrijedi jedan sat slobodnog vremena? (€)</label>
+          <input id="hourValue" data-save type="number" min="0" value="10">
+          <div style="margin-top:8px">Ovo je subjektivna vrijednost vremena i koristi se samo u Total Job Value izračunu.</div>
+        </div>
         <div class="step-actions"><button class="btn btn-ghost" onclick="goTo(2)">← Natrag</button><button class="btn btn-primary" onclick="calculate()">Izračunaj →</button></div>
       </section>
 
@@ -164,6 +175,15 @@
           </div>
         </section>
 
+        <section class="panel">
+          <h2>Važno o izračunu</h2>
+          <p class="muted">
+            WorthSwitch daje informativnu godišnju procjenu. Model za 2026. koristi osnovni osobni odbitak 600 € mjesečno,
+            godišnji prag 60.000 € između niže i više stope te korisnikove lokalne porezne stope. Model ne zamjenjuje
+            službeni obračun plaće, porezni savjet niti obračun poslodavca. Neoporezivi primitci ne provjeravaju se automatski prema zakonskim limitima.
+          </p>
+        </section>
+
         <div class="step-actions">
           <button class="btn btn-ghost" onclick="goTo(3)">← Uredi ponudu</button>
           <div class="action-group">
@@ -174,8 +194,11 @@
       </section>
     </main>
 
-    <footer>WorthSwitch v5.1 · informativni kalkulator za Hrvatsku. Godišnji porezni model uključuje mirovinske doprinose, osobni odbitak, prag 60.000 €, lokalne stope i opcionalno umanjenje poreza za mlade. Prije komercijalnog lansiranja potrebna je stručna porezna validacija.</footer>
+    <footer>
+      WorthSwitch v5.2 · informativni kalkulator za Hrvatsku. Godišnji porezni model uključuje mirovinske doprinose,
+      osobni odbitak, prag 60.000 €, lokalne stope i opcionalno godišnje umanjenje poreza za mlade.
+    </footer>
   </div>
   <script src="app.js"></script>
 </body>
-</html>
+  </html>
