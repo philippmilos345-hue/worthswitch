@@ -1003,88 +1003,114 @@ function breakEvenText(be) {
 // VALIDATION
 // ============================================================
 
-function validateInputs() {
 
+Philipp Miloš <philipp.milos345@gmail.com>
+15:05 (prije 0 minuta)
+prima ja
+
+function validateInputs() {
   const problems = [];
 
-  ['c', 'n']
-    .forEach(p => {
+  ['c', 'n'].forEach(p => {
+    const name =
+      p === 'c'
+        ? 'Trenutni posao'
+        : 'Nova ponuda';
 
-      const name =
-        p === 'c'
-          ? 'Trenutni posao'
-          : 'Nova ponuda';
+    const checks = [
+      [p + 'Salary', 0, 50000, 'bruto plaća'],
+      [p + 'Months', 1, 24, 'broj plaća'],
+      [p + 'Bonus', 0, 500000, 'godišnji bruto bonus'],
+      [p + 'Other', 0, 100000, 'ostali neoporezivi primici'],
+      [p + 'Regres', 0, 100000, 'regres'],
+      [p + 'Boz', 0, 100000, 'božićnica'],
+      [p + 'Usk', 0, 100000, 'uskrsnica'],
+      [p + 'Meal', 0, 5000, 'prehrana mjesečno'],
+      [p + 'TravelPay', 0, 5000, 'prijevoz koji firma isplaćuje'],
+      [p + 'Vacation', 0, 60, 'broj dana godišnjeg'],
+      [p + 'Remote', 0, 5, 'remote dani'],
+      [p + 'Commute', 0, 300, 'vrijeme putovanja'],
+      [p + 'TravelCost', 0, 500, 'trošak puta po danu'],
+      [p + 'Benefits', 0, 100000, 'vrijednost benefita']
+    ];
 
-      if (
-        N(p + 'Salary') < 0
-      ) {
+    checks.forEach(([id, min, max, label]) => {
+      const el = $(id);
+
+      if (!el) return;
+
+      const rawValue = el.value.trim();
+
+      if (rawValue === '') {
         problems.push(
-          name +
-          ': bruto plaća ne može biti negativna.'
+          `${name}: polje "${label}" ne smije biti prazno.`
         );
+        return;
       }
 
-      if (
-        N(p + 'Months') < 1 ||
-        N(p + 'Months') > 24
-      ) {
+      const value = Number(rawValue);
+
+      if (!Number.isFinite(value)) {
         problems.push(
-          name +
-          ': broj plaća mora biti između 1 i 24.'
+          `${name}: polje "${label}" mora biti broj.`
         );
+        return;
       }
 
-      if (
-        N(p + 'Remote') < 0 ||
-        N(p + 'Remote') > 5
-      ) {
+      if (value < min || value > max) {
         problems.push(
-          name +
-          ': remote dani moraju biti između 0 i 5.'
-        );
-      }
-
-      if (
-        N(p + 'Vacation') < 0 ||
-        N(p + 'Vacation') > 60
-      ) {
-        problems.push(
-          name +
-          ': provjeri broj dana godišnjeg odmora.'
-        );
-      }
-
-      if (
-        N(p + 'Commute') < 0 ||
-        N(p + 'Commute') > 300
-      ) {
-        problems.push(
-          name +
-          ': provjeri vrijeme putovanja.'
+          `${name}: provjeri "${label}" — dopušten raspon je ${min} do ${max}.`
         );
       }
     });
+  });
 
-  if (
-    N('taxLow') < 0 ||
-    N('taxLow') > 40
-  ) {
-    problems.push(
-      'Provjeri nižu poreznu stopu.'
-    );
-  }
+  const taxChecks = [
+    ['taxLow', 0, 40, 'niža porezna stopa'],
+    ['taxHigh', 0, 50, 'viša porezna stopa'],
+    ['weekdayHolidays', 0, 20, 'broj blagdana koji padaju na radni dan'],
+    ['hourValue', 0, 200, 'vrijednost sata slobodnog vremena'],
+    ['dependents', 0, 20, 'broj uzdržavanih članova'],
+    ['children', 0, 20, 'broj djece']
+  ];
 
-  if (
-    N('taxHigh') < 0 ||
-    N('taxHigh') > 50
-  ) {
+  taxChecks.forEach(([id, min, max, label]) => {
+    const el = $(id);
+
+    if (!el) return;
+
+    const rawValue = el.value.trim();
+
+    if (rawValue === '') {
+      problems.push(
+        `Porezni profil: polje "${label}" ne smije biti prazno.`
+      );
+      return;
+    }
+
+    const value = Number(rawValue);
+
+    if (!Number.isFinite(value)) {
+      problems.push(
+        `Porezni profil: polje "${label}" mora biti broj.`
+      );
+      return;
+    }
+
+    if (value < min || value > max) {
+      problems.push(
+        `Porezni profil: provjeri "${label}" — dopušten raspon je ${min} do ${max}.`
+      );
+    }
+  });
+
+  if (N('taxHigh') < N('taxLow')) {
     problems.push(
-      'Provjeri višu poreznu stopu.'
+      'Porezni profil: viša porezna stopa ne bi trebala biti niža od niže porezne stope.'
     );
   }
 
   if (problems.length) {
-
     alert(
       'Provjeri unesene podatke:\n\n' +
       problems.join('\n')
