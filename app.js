@@ -150,6 +150,86 @@ buildJobForms();
 
 
 // ============================================================
+// WORK-LIFE LABELS
+// ============================================================
+
+function updateWorkLifeLabels() {
+
+  document
+    .querySelectorAll('.feature-card h3')
+    .forEach(el => {
+      if (el.textContent.trim() === 'Job Score') {
+        el.textContent = 'Work-Life Score';
+      }
+    });
+
+  document
+    .querySelectorAll('.feature-card')
+    .forEach(card => {
+      const h3 = card.querySelector('h3');
+
+      if (
+        h3 &&
+        h3.textContent.trim() === 'Work-Life Score'
+      ) {
+        const p = card.querySelector('p');
+
+        if (p) {
+          p.textContent =
+            'Pokazatelj fleksibilnosti, putovanja, godišnjeg odmora i benefita.';
+        }
+      }
+    });
+
+  if ($('kScore')) {
+    const card =
+      $('kScore').closest('.kpi-card');
+
+    if (card) {
+      const label =
+        card.querySelector('.kpi-label');
+
+      const help =
+        card.querySelector('.kpi-help');
+
+      if (label) {
+        label.textContent =
+          'Work-Life Score';
+      }
+
+      if (help) {
+        help.textContent =
+          'Heuristički indikator kvalitete radnih uvjeta.';
+      }
+    }
+  }
+
+  if ($('scores')) {
+    const panel =
+      $('scores').closest('.panel');
+
+    if (panel) {
+      const h2 =
+        panel.querySelector('h2');
+
+      const p =
+        panel.querySelector('p.muted');
+
+      if (h2) {
+        h2.textContent =
+          'Work-Life Score';
+      }
+
+      if (p) {
+        p.textContent =
+          'Dodatni heuristički indikator koji uspoređuje benefite, fleksibilnost, vrijeme putovanja i godišnji odmor. Plaća se ne boduje jer je već uključena u Total Job Value.';
+      }
+    }
+  }
+}
+
+
+// ============================================================
 // NAVIGATION
 // ============================================================
 
@@ -190,7 +270,8 @@ function goTo(x) {
     x + ' / 4 — ' +
     ['Porezni profil', 'Trenutni posao', 'Nova ponuda', 'Rezultat'][x - 1];
 
-  $('progressBar').style.width = x * 25 + '%';
+  $('progressBar').style.width =
+    x * 25 + '%';
 
   window.scrollTo({
     top: 0,
@@ -199,6 +280,10 @@ function goTo(x) {
 
   if (x === 1) {
     updateAllowance();
+  }
+
+  if (x === 4) {
+    updateWorkLifeLabels();
   }
 }
 
@@ -211,8 +296,11 @@ function applyCity() {
   const v = $('city').value;
 
   if (rates[v]) {
-    $('taxLow').value = rates[v][0];
-    $('taxHigh').value = rates[v][1];
+    $('taxLow').value =
+      rates[v][0];
+
+    $('taxHigh').value =
+      rates[v][1];
 
     saveDraft();
   }
@@ -220,7 +308,13 @@ function applyCity() {
 
 
 function childAllowance(k) {
-  k = Math.max(0, Math.floor(Number(k) || 0));
+  k =
+    Math.max(
+      0,
+      Math.floor(
+        Number(k) || 0
+      )
+    );
 
   const firstNine = [
     300,
@@ -237,21 +331,38 @@ function childAllowance(k) {
   if (k <= 9) {
     let total = 0;
 
-    for (let i = 0; i < k; i++) {
-      total += firstNine[i];
+    for (
+      let i = 0;
+      i < k;
+      i++
+    ) {
+      total +=
+        firstNine[i];
     }
 
     return total;
   }
 
-  let total = firstNine.reduce((a, b) => a + b, 0);
+  let total =
+    firstNine.reduce(
+      (a, b) => a + b,
+      0
+    );
 
-  let previousCoefficient = 4.9;
+  let previousCoefficient =
+    4.9;
 
-  for (let child = 10; child <= k; child++) {
-    const increment = 1.1 + (child - 10) * 0.1;
+  for (
+    let child = 10;
+    child <= k;
+    child++
+  ) {
+    const increment =
+      1.1 +
+      (child - 10) * 0.1;
 
-    previousCoefficient += increment;
+    previousCoefficient +=
+      increment;
 
     total +=
       previousCoefficient *
@@ -273,7 +384,9 @@ function allowance() {
 
 
 function updateAllowance() {
-  if (!$('allowanceInfo')) return;
+  if (!$('allowanceInfo')) {
+    return;
+  }
 
   $('allowanceInfo').innerHTML =
     'Procijenjeni osobni odbitak: <b>' +
@@ -284,13 +397,20 @@ function updateAllowance() {
 
 
 function normalizeYouthRelief(v) {
-  v = Number(v) || 0;
+  v =
+    Number(v) || 0;
 
   if (v > 1) {
     v /= 100;
   }
 
-  return Math.max(0, Math.min(1, v));
+  return Math.max(
+    0,
+    Math.min(
+      1,
+      v
+    )
+  );
 }
 
 
@@ -299,25 +419,48 @@ function normalizeYouthRelief(v) {
 // ============================================================
 
 function fmt(x) {
-  return new Intl.NumberFormat('hr-HR', {
-    style: 'currency',
-    currency: 'EUR',
-    maximumFractionDigits: 0
-  }).format(
-    Number.isFinite(Number(x)) ? Number(x) : 0
+  return new Intl.NumberFormat(
+    'hr-HR',
+    {
+      style: 'currency',
+      currency: 'EUR',
+      maximumFractionDigits: 0
+    }
+  ).format(
+    Number.isFinite(
+      Number(x)
+    )
+      ? Number(x)
+      : 0
   );
 }
 
 
 function signedMoney(x) {
-  return (x >= 0 ? '+' : '') + fmt(x);
+  return (
+    x >= 0
+      ? '+'
+      : ''
+  ) + fmt(x);
 }
 
 
-function signedNumber(x, suffix = '') {
-  const n = Math.round(Number(x) || 0);
+function signedNumber(
+  x,
+  suffix = ''
+) {
+  const n =
+    Math.round(
+      Number(x) || 0
+    );
 
-  return (n >= 0 ? '+' : '') + n + suffix;
+  return (
+    n >= 0
+      ? '+'
+      : ''
+  ) +
+  n +
+  suffix;
 }
 
 
@@ -326,25 +469,35 @@ function signedNumber(x, suffix = '') {
 // ============================================================
 
 function annualEmploymentTax(grossAnnual) {
-  grossAnnual = Math.max(
-    0,
-    Number(grossAnnual) || 0
-  );
+
+  grossAnnual =
+    Math.max(
+      0,
+      Number(grossAnnual) || 0
+    );
 
   const pension =
     grossAnnual *
     TAX_CONFIG_2026.pensionRate;
 
   const annualAllowance =
-    Math.max(0, allowance() * 12);
+    Math.max(
+      0,
+      allowance() * 12
+    );
 
   const incomeAfterPension =
-    Math.max(0, grossAnnual - pension);
+    Math.max(
+      0,
+      grossAnnual -
+      pension
+    );
 
   const taxable =
     Math.max(
       0,
-      incomeAfterPension - annualAllowance
+      incomeAfterPension -
+      annualAllowance
     );
 
   const lowerBase =
@@ -361,27 +514,33 @@ function annualEmploymentTax(grossAnnual) {
     );
 
   const lowRate =
-    Math.max(0, N('taxLow')) / 100;
+    Math.max(
+      0,
+      N('taxLow')
+    ) / 100;
 
   const highRate =
-    Math.max(0, N('taxHigh')) / 100;
+    Math.max(
+      0,
+      N('taxHigh')
+    ) / 100;
 
   const lowerTax =
-    lowerBase * lowRate;
+    lowerBase *
+    lowRate;
 
   const higherTax =
-    higherBase * highRate;
+    higherBase *
+    highRate;
 
-  // WorthSwitch modelira samo dohodak od nesamostalnog rada.
-  // Odabrano umanjenje za mlade zato se primjenjuje
-  // na proporcionalni porez niže osnovice.
   const youth =
     normalizeYouthRelief(
       N('youthRelief')
     );
 
   const youthReliefAmount =
-    lowerTax * youth;
+    lowerTax *
+    youth;
 
   const tax =
     Math.max(
@@ -444,58 +603,100 @@ function normalizedJob(j) {
     ...j,
 
     salary:
-      Math.max(0, Number(j.salary) || 0),
+      Math.max(
+        0,
+        Number(j.salary) || 0
+      ),
 
     months:
       Math.max(
         1,
-        Math.min(24, Number(j.months) || 12)
+        Math.min(
+          24,
+          Number(j.months) || 12
+        )
       ),
 
     bonus:
-      Math.max(0, Number(j.bonus) || 0),
+      Math.max(
+        0,
+        Number(j.bonus) || 0
+      ),
 
     other:
-      Math.max(0, Number(j.other) || 0),
+      Math.max(
+        0,
+        Number(j.other) || 0
+      ),
 
     regres:
-      Math.max(0, Number(j.regres) || 0),
+      Math.max(
+        0,
+        Number(j.regres) || 0
+      ),
 
     boz:
-      Math.max(0, Number(j.boz) || 0),
+      Math.max(
+        0,
+        Number(j.boz) || 0
+      ),
 
     usk:
-      Math.max(0, Number(j.usk) || 0),
+      Math.max(
+        0,
+        Number(j.usk) || 0
+      ),
 
     meal:
-      Math.max(0, Number(j.meal) || 0),
+      Math.max(
+        0,
+        Number(j.meal) || 0
+      ),
 
     travelPay:
-      Math.max(0, Number(j.travelPay) || 0),
+      Math.max(
+        0,
+        Number(j.travelPay) || 0
+      ),
 
     vacation:
       Math.max(
         0,
-        Math.min(60, Number(j.vacation) || 0)
+        Math.min(
+          60,
+          Number(j.vacation) || 0
+        )
       ),
 
     remote:
       Math.max(
         0,
-        Math.min(5, Number(j.remote) || 0)
+        Math.min(
+          5,
+          Number(j.remote) || 0
+        )
       ),
 
     commute:
       Math.max(
         0,
-        Math.min(300, Number(j.commute) || 0)
+        Math.min(
+          300,
+          Number(j.commute) || 0
+        )
       ),
 
     travelCost:
-      Math.max(0, Number(j.travelCost) || 0),
+      Math.max(
+        0,
+        Number(j.travelCost) || 0
+      ),
 
     benefits:
-      Math.max(0, Number(j.benefits) || 0)
+      Math.max(
+        0,
+        Number(j.benefits) || 0
+      )
   };
 }
 
@@ -505,33 +706,40 @@ function normalizedJob(j) {
 // ============================================================
 
 function calc(inputJob) {
-  const j = normalizedJob(inputJob);
+
+  const j =
+    normalizedJob(
+      inputJob
+    );
 
   const grossAnnual =
-    j.salary * j.months +
+    j.salary *
+    j.months +
     j.bonus;
 
   const tax =
-    annualEmploymentTax(grossAnnual);
+    annualEmploymentTax(
+      grossAnnual
+    );
 
-  // Razdvajanje redovne plaće i bonusa služi samo za prikaz.
-  // Ukupan neto računa se godišnje.
   const regularGross =
-    j.salary * j.months;
+    j.salary *
+    j.months;
 
   const regularShare =
     grossAnnual
-      ? regularGross / grossAnnual
+      ? regularGross /
+        grossAnnual
       : 0;
 
   const ns =
-    tax.net * regularShare;
+    tax.net *
+    regularShare;
 
   const nb =
-    tax.net - ns;
+    tax.net -
+    ns;
 
-  // Korisnik unosi iznose koje stvarno očekuje
-  // kao neoporezivu isplatu.
   const direct =
     j.other +
     j.regres +
@@ -590,42 +798,92 @@ function calc(inputJob) {
       N('hourValue')
     );
 
-  // Job Score je heuristički indikator.
-  const sm =
+
+  // ========================================================
+  // WORK-LIFE SCORE
+  // ========================================================
+  //
+  // Work-Life Score namjerno NE boduje plaću.
+  // Novac je već uključen u Financial Value i Total Job Value.
+  //
+  // Score uspoređuje:
+  // 15% benefite
+  // 30% fleksibilnost
+  // 30% putovanje
+  // 25% godišnji odmor
+  //
+  // Tako Total Job Value odgovara na pitanje:
+  // "Isplati li se?"
+  //
+  // Work-Life Score odgovara na pitanje:
+  // "Kakvi su radni uvjeti?"
+  // ========================================================
+
+
+  // Benefiti:
+  // 0 € = 0 bodova
+  // 3.000 € godišnje ili više = 100 bodova
+  const sb =
     Math.min(
       100,
       Math.max(
         0,
-        cash / 520
+        j.benefits / 30
       )
     );
 
+
+  // Fleksibilnost:
+  // 0 remote dana = 0
+  // 5 remote dana = 100
   const sf =
     Math.min(
       100,
-      j.remote / 5 * 100
+      Math.max(
+        0,
+        j.remote / 5 * 100
+      )
     );
 
+
+  // Putovanje:
+  // 0 min u jednom smjeru = 100
+  // 60 min = 50
+  // 120 min ili više = 0
+  //
+  // Remote ovdje NE utječe na score,
+  // kako se fleksibilnost ne bi bodovala dvaput.
   const st =
-    Math.max(
-      0,
-      100 -
-      hours / 3
+    Math.min(
+      100,
+      Math.max(
+        0,
+        100 -
+        j.commute / 1.2
+      )
     );
 
+
+  // Godišnji odmor:
+  // 30 dana = 100 bodova
   const sv =
     Math.min(
       100,
-      j.vacation / 30 * 100
+      Math.max(
+        0,
+        j.vacation / 30 * 100
+      )
     );
+
 
   const score =
     Math.round(
-      sm * .45 +
-      sf * .20 +
-      st * .20 +
-      sv * .15
+      sb * .15 +
+      sf * .30 +
+      st * .30 +
+      sv * .25
     );
+
 
   return {
     ...j,
@@ -640,7 +898,8 @@ function calc(inputJob) {
     cash,
     financial,
     total,
-    sm,
+
+    sb,
     sf,
     st,
     sv,
@@ -661,7 +920,8 @@ function breakEven(c, r) {
     calc({
       ...r,
       salary: lo
-    }).total >= c.total
+    }).total >=
+    c.total
   ) {
     return {
       value: lo,
@@ -673,7 +933,8 @@ function breakEven(c, r) {
     calc({
       ...r,
       salary: hi
-    }).total < c.total
+    }).total <
+    c.total
   ) {
     return {
       value: hi,
@@ -681,7 +942,11 @@ function breakEven(c, r) {
     };
   }
 
-  for (let i = 0; i < 45; i++) {
+  for (
+    let i = 0;
+    i < 45;
+    i++
+  ) {
     const m =
       (lo + hi) / 2;
 
@@ -689,10 +954,12 @@ function breakEven(c, r) {
       calc({
         ...r,
         salary: m
-      }).total >= c.total
+      }).total >=
+      c.total
     ) {
       hi = m;
-    } else {
+    }
+    else {
       lo = m;
     }
   }
@@ -705,12 +972,21 @@ function breakEven(c, r) {
 
 
 function breakEvenText(be) {
-  if (be.status === 'above') {
-    return '>' + fmt(be.value);
+
+  if (
+    be.status ===
+    'above'
+  ) {
+    return '>' +
+      fmt(be.value);
   }
 
-  if (be.status === 'below') {
-    return '<' + fmt(be.value);
+  if (
+    be.status ===
+    'below'
+  ) {
+    return '<' +
+      fmt(be.value);
   }
 
   return fmt(be.value);
@@ -722,56 +998,66 @@ function breakEvenText(be) {
 // ============================================================
 
 function validateInputs() {
+
   const problems = [];
 
-  ['c', 'n'].forEach(p => {
-    const name =
-      p === 'c'
-        ? 'Trenutni posao'
-        : 'Nova ponuda';
+  ['c', 'n']
+    .forEach(p => {
 
-    if (N(p + 'Salary') < 0) {
-      problems.push(
-        name + ': bruto plaća ne može biti negativna.'
-      );
-    }
+      const name =
+        p === 'c'
+          ? 'Trenutni posao'
+          : 'Nova ponuda';
 
-    if (
-      N(p + 'Months') < 1 ||
-      N(p + 'Months') > 24
-    ) {
-      problems.push(
-        name + ': broj plaća mora biti između 1 i 24.'
-      );
-    }
+      if (
+        N(p + 'Salary') < 0
+      ) {
+        problems.push(
+          name +
+          ': bruto plaća ne može biti negativna.'
+        );
+      }
 
-    if (
-      N(p + 'Remote') < 0 ||
-      N(p + 'Remote') > 5
-    ) {
-      problems.push(
-        name + ': remote dani moraju biti između 0 i 5.'
-      );
-    }
+      if (
+        N(p + 'Months') < 1 ||
+        N(p + 'Months') > 24
+      ) {
+        problems.push(
+          name +
+          ': broj plaća mora biti između 1 i 24.'
+        );
+      }
 
-    if (
-      N(p + 'Vacation') < 0 ||
-      N(p + 'Vacation') > 60
-    ) {
-      problems.push(
-        name + ': provjeri broj dana godišnjeg odmora.'
-      );
-    }
+      if (
+        N(p + 'Remote') < 0 ||
+        N(p + 'Remote') > 5
+      ) {
+        problems.push(
+          name +
+          ': remote dani moraju biti između 0 i 5.'
+        );
+      }
 
-    if (
-      N(p + 'Commute') < 0 ||
-      N(p + 'Commute') > 300
-    ) {
-      problems.push(
-        name + ': provjeri vrijeme putovanja.'
-      );
-    }
-  });
+      if (
+        N(p + 'Vacation') < 0 ||
+        N(p + 'Vacation') > 60
+      ) {
+        problems.push(
+          name +
+          ': provjeri broj dana godišnjeg odmora.'
+        );
+      }
+
+      if (
+        N(p + 'Commute') < 0 ||
+        N(p + 'Commute') > 300
+      ) {
+        problems.push(
+          name +
+          ': provjeri vrijeme putovanja.'
+        );
+      }
+    });
 
   if (
     N('taxLow') < 0 ||
@@ -792,6 +1078,7 @@ function validateInputs() {
   }
 
   if (problems.length) {
+
     alert(
       'Provjeri unesene podatke:\n\n' +
       problems.join('\n')
@@ -808,9 +1095,14 @@ function validateInputs() {
 // RESULT VERDICT
 // ============================================================
 
-function resultVerdict(d, pct) {
+function resultVerdict(
+  d,
+  pct
+) {
+
   if (
-    Math.abs(pct) < NEUTRAL_PERCENT
+    Math.abs(pct) <
+    NEUTRAL_PERCENT
   ) {
     return {
       type: 'neutral',
@@ -837,15 +1129,24 @@ function resultVerdict(d, pct) {
 // ============================================================
 
 function calculate() {
-  if (!validateInputs()) {
+
+  if (
+    !validateInputs()
+  ) {
     return;
   }
 
-  const cr = raw('c');
-  const nr = raw('n');
+  const cr =
+    raw('c');
 
-  const c = calc(cr);
-  const nn = calc(nr);
+  const nr =
+    raw('n');
+
+  const c =
+    calc(cr);
+
+  const nn =
+    calc(nr);
 
   const d =
     nn.total -
@@ -860,18 +1161,26 @@ function calculate() {
     nn.hours;
 
   const beObj =
-    breakEven(c, nr);
+    breakEven(
+      c,
+      nr
+    );
 
   const be =
     beObj.value;
 
   const pct =
     c.total
-      ? d / Math.abs(c.total) * 100
+      ? d /
+        Math.abs(c.total) *
+        100
       : 0;
 
   const verdict =
-    resultVerdict(d, pct);
+    resultVerdict(
+      d,
+      pct
+    );
 
   last = {
     cr,
@@ -937,10 +1246,15 @@ function calculate() {
     signedMoney(fd);
 
   $('kTime').textContent =
-    signedNumber(saved, ' h');
+    signedNumber(
+      saved,
+      ' h'
+    );
 
   $('kBreak').textContent =
-    breakEvenText(beObj);
+    breakEvenText(
+      beObj
+    );
 
   const scoreDiff =
     nn.score -
@@ -1061,32 +1375,45 @@ function calculate() {
         Math.min(
           nr.salary,
           be
-        ) - 1500
+        ) -
+        1500
       )
     );
 
   const simMax =
     Math.max(
-      simMin + 2000,
+      simMin +
+      2000,
+
       Math.ceil(
         Math.max(
           nr.salary,
           be
-        ) + 2000
+        ) +
+        2000
       )
     );
 
   $('simSalary').min =
-    Math.floor(simMin / 50) * 50;
+    Math.floor(
+      simMin / 50
+    ) * 50;
 
   $('simSalary').max =
-    Math.ceil(simMax / 50) * 50;
+    Math.ceil(
+      simMax / 50
+    ) * 50;
 
   $('simSalary').value =
     Math.min(
-      Number($('simSalary').max),
+      Number(
+        $('simSalary').max
+      ),
+
       Math.max(
-        Number($('simSalary').min),
+        Number(
+          $('simSalary').min
+        ),
         nr.salary
       )
     );
@@ -1096,22 +1423,33 @@ function calculate() {
 
   // ---------------- HOW MUCH TO ASK ----------------
 
-  if (beObj.status === 'within') {
+  if (
+    beObj.status ===
+    'within'
+  ) {
+
     const min =
-      Math.ceil(be / 50) * 50;
+      Math.ceil(
+        be / 50
+      ) * 50;
 
     const fair =
       Math.ceil(
-        be * 1.05 / 50
+        be *
+        1.05 /
+        50
       ) * 50;
 
     const exc =
       Math.ceil(
-        be * 1.10 / 50
+        be *
+        1.10 /
+        50
       ) * 50;
 
     $('ask').innerHTML = `
       <div class="pill-row">
+
         <span class="pill">
           Minimalno ${fmt(min)}
         </span>
@@ -1123,6 +1461,7 @@ function calculate() {
         <span class="pill">
           Odlično ${fmt(exc)}+
         </span>
+
       </div>
 
       <div class="callout">
@@ -1136,7 +1475,8 @@ function calculate() {
   }
 
   else if (
-    beObj.status === 'above'
+    beObj.status ===
+    'above'
   ) {
     $('ask').innerHTML = `
       <div class="callout">
@@ -1165,6 +1505,7 @@ function calculate() {
     <div class="grid3">
 
       <div class="mini-stat">
+
         <div class="kpi">
           ${Math.round(c.hours)}
         </div>
@@ -1172,9 +1513,11 @@ function calculate() {
         <div class="kpi-label">
           sati sada
         </div>
+
       </div>
 
       <div class="mini-stat">
+
         <div class="kpi">
           ${Math.round(nn.hours)}
         </div>
@@ -1182,9 +1525,11 @@ function calculate() {
         <div class="kpi-label">
           sati novo
         </div>
+
       </div>
 
       <div class="mini-stat">
+
         <div class="kpi">
           ${signedNumber(saved)}
         </div>
@@ -1192,6 +1537,7 @@ function calculate() {
         <div class="kpi-label">
           razlika
         </div>
+
       </div>
 
     </div>
@@ -1208,59 +1554,67 @@ function calculate() {
   `;
 
 
-  // ---------------- JOB SCORE ----------------
+  // ---------------- WORK-LIFE SCORE ----------------
 
   const rows = [
-    ['Novac', c.sm, nn.sm],
+    ['Benefiti', c.sb, nn.sb],
     ['Fleksibilnost', c.sf, nn.sf],
-    ['Vrijeme', c.st, nn.st],
+    ['Putovanje', c.st, nn.st],
     ['Godišnji', c.sv, nn.sv]
   ];
 
   $('scores').innerHTML =
-    rows.map(r => `
-      <div class="metric">
+    rows.map(
+      r => `
+        <div class="metric">
 
-        <div class="metric-head">
-          <span>${r[0]}</span>
+          <div class="metric-head">
 
-          <span>
-            ${Math.round(r[1])}
-            →
-            ${Math.round(r[2])}
-          </span>
-        </div>
+            <span>
+              ${r[0]}
+            </span>
 
-        <div class="score-bars">
+            <span>
+              ${Math.round(r[1])}
+              →
+              ${Math.round(r[2])}
+            </span>
 
-          <div
-            class="bar bar-old"
-            title="Trenutni posao"
-          >
-            <div
-              style="width:${Math.max(0, Math.min(100, r[1]))}%"
-            ></div>
           </div>
 
-          <div
-            class="bar bar-new"
-            title="Nova ponuda"
-          >
+          <div class="score-bars">
+
             <div
-              style="width:${Math.max(0, Math.min(100, r[2]))}%"
-            ></div>
+              class="bar bar-old"
+              title="Trenutni posao"
+            >
+              <div
+                style="width:${Math.max(0, Math.min(100, r[1]))}%"
+              ></div>
+            </div>
+
+            <div
+              class="bar bar-new"
+              title="Nova ponuda"
+            >
+              <div
+                style="width:${Math.max(0, Math.min(100, r[2]))}%"
+              ></div>
+            </div>
+
           </div>
 
         </div>
-
-      </div>
-    `).join('') +
+      `
+    ).join('') +
 
     `
       <div class="callout">
 
         <div class="score-total">
+
           <div>
+
             <span class="score-caption">
               Trenutni
             </span>
@@ -1268,6 +1622,7 @@ function calculate() {
             <strong>
               ${c.score}/100
             </strong>
+
           </div>
 
           <div class="score-arrow">
@@ -1275,6 +1630,7 @@ function calculate() {
           </div>
 
           <div>
+
             <span class="score-caption">
               Nova ponuda
             </span>
@@ -1282,19 +1638,22 @@ function calculate() {
             <strong>
               ${nn.score}/100
             </strong>
+
           </div>
+
         </div>
 
         <div class="score-disclaimer">
-          Job Score je heuristički indikator.
-          Financijska odluka treba se prvenstveno
-          temeljiti na konkretnim uvjetima ponude
-          i Total Job Value rezultatu.
+          Work-Life Score je heuristički indikator
+          kvalitete radnih uvjeta.
+          Plaća nije dio ovog pokazatelja jer je već
+          uključena u Total Job Value.
         </div>
 
       </div>
     `;
 
+  updateWorkLifeLabels();
 
   saveDraft();
 
@@ -1307,7 +1666,12 @@ function calculate() {
 // ============================================================
 
 function simulate() {
-  if (!last.c) return;
+
+  if (
+    !last.c
+  ) {
+    return;
+  }
 
   const s =
     N('simSalary');
@@ -1324,7 +1688,9 @@ function simulate() {
 
   const pct =
     last.c.total
-      ? d / Math.abs(last.c.total) * 100
+      ? d /
+        Math.abs(last.c.total) *
+        100
       : 0;
 
   const verdict =
@@ -1338,7 +1704,8 @@ function simulate() {
     ' bruto / mj.';
 
   if (
-    verdict.type === 'neutral'
+    verdict.type ===
+    'neutral'
   ) {
     $('simOut').innerHTML =
       `<b>Približno izjednačeno.</b> ` +
@@ -1366,10 +1733,13 @@ function simulate() {
 // ============================================================
 
 function updateCommuteHelper(p) {
+
   const el =
     $(p + 'CommuteHelp');
 
-  if (!el) return;
+  if (!el) {
+    return;
+  }
 
   const min =
     Math.max(
@@ -1380,6 +1750,7 @@ function updateCommuteHelper(p) {
   if (!min) {
     el.textContent =
       'Nema vremena putovanja.';
+
     return;
   }
 
@@ -1403,13 +1774,19 @@ function updateCommuteHelpers() {
 // ============================================================
 
 function saveDraft() {
+
   const data = {};
 
   document
-    .querySelectorAll('[data-save]')
-    .forEach(el => {
-      data[el.id] = el.value;
-    });
+    .querySelectorAll(
+      '[data-save]'
+    )
+    .forEach(
+      el => {
+        data[el.id] =
+          el.value;
+      }
+    );
 
   localStorage.setItem(
     'worthswitchDraftV53',
@@ -1419,6 +1796,7 @@ function saveDraft() {
 
 
 function restoreDraft() {
+
   const rawData =
     localStorage.getItem(
       'worthswitchDraftV53'
@@ -1435,19 +1813,25 @@ function restoreDraft() {
 
   try {
     data =
-      JSON.parse(rawData) || {};
+      JSON.parse(
+        rawData
+      ) || {};
   }
+
   catch (e) {
     data = {};
   }
 
-  Object.entries(data).forEach(
-    ([id, val]) => {
-      if ($(id)) {
-        $(id).value = val;
+  Object
+    .entries(data)
+    .forEach(
+      ([id, val]) => {
+        if ($(id)) {
+          $(id).value =
+            val;
+        }
       }
-    }
-  );
+    );
 
   updateAllowance();
   updateCommuteHelpers();
@@ -1457,11 +1841,13 @@ function restoreDraft() {
 document.addEventListener(
   'input',
   e => {
+
     if (
       e.target.matches(
         '[data-save]'
       )
     ) {
+
       saveDraft();
 
       if (
@@ -1480,14 +1866,18 @@ document.addEventListener(
         e.target.id ===
         'cCommute'
       ) {
-        updateCommuteHelper('c');
+        updateCommuteHelper(
+          'c'
+        );
       }
 
       if (
         e.target.id ===
         'nCommute'
       ) {
-        updateCommuteHelper('n');
+        updateCommuteHelper(
+          'n'
+        );
       }
     }
   }
@@ -1499,6 +1889,7 @@ document.addEventListener(
 // ============================================================
 
 function getSavedComparisons() {
+
   const rawData =
     localStorage.getItem(
       'worthswitchSavedV53'
@@ -1512,13 +1903,19 @@ function getSavedComparisons() {
     '[]';
 
   try {
-    const parsed =
-      JSON.parse(rawData);
 
-    return Array.isArray(parsed)
+    const parsed =
+      JSON.parse(
+        rawData
+      );
+
+    return Array.isArray(
+      parsed
+    )
       ? parsed
       : [];
   }
+
   catch (e) {
     return [];
   }
@@ -1526,13 +1923,20 @@ function getSavedComparisons() {
 
 
 function saveComparison() {
-  if (!last.c) return;
+
+  if (
+    !last.c
+  ) {
+    return;
+  }
 
   let a =
     getSavedComparisons();
 
   a.unshift({
-    id: Date.now(),
+
+    id:
+      Date.now(),
 
     when:
       new Date()
@@ -1577,7 +1981,10 @@ function saveComparison() {
   localStorage.setItem(
     'worthswitchSavedV53',
     JSON.stringify(
-      a.slice(0, 20)
+      a.slice(
+        0,
+        20
+      )
     )
   );
 
@@ -1588,9 +1995,12 @@ function saveComparison() {
 
 
 function showSaved() {
+
   $('savedPanel')
     .classList
-    .remove('hidden');
+    .remove(
+      'hidden'
+    );
 
   renderSaved();
 
@@ -1602,69 +2012,89 @@ function showSaved() {
 
 
 function closeSaved() {
+
   $('savedPanel')
     .classList
-    .add('hidden');
+    .add(
+      'hidden'
+    );
 }
 
 
 function renderSaved() {
+
   const a =
     getSavedComparisons();
 
   $('savedList').innerHTML =
+
     a.length
 
-      ? a.map(x => {
-          const beText =
-            x.beStatus === 'above'
-              ? '> ' + fmt(x.be)
-              : x.beStatus === 'below'
-                ? '< ' + fmt(x.be)
-                : fmt(x.be);
+      ? a.map(
+          x => {
 
-          return `
-            <div class="saved-item">
+            const beText =
+              x.beStatus ===
+              'above'
 
-              <div>
+                ? '> ' +
+                  fmt(x.be)
 
-                <b>
-                  ${fmt(x.c)}
-                  →
-                  ${fmt(x.n)}
-                  bruto/mj.
-                </b>
+                : x.beStatus ===
+                  'below'
 
-                <div class="saved-meta">
-                  ${x.when}
-                  ·
-                  ${x.d >= 0 ? '+' : ''}${fmt(x.d)}/god.
-                  ·
-                  break-even ${beText}
+                  ? '< ' +
+                    fmt(x.be)
+
+                  : fmt(x.be);
+
+            return `
+              <div class="saved-item">
+
+                <div>
+
+                  <b>
+                    ${fmt(x.c)}
+                    →
+                    ${fmt(x.n)}
+                    bruto/mj.
+                  </b>
+
+                  <div class="saved-meta">
+
+                    ${x.when}
+                    ·
+                    ${x.d >= 0 ? '+' : ''}${fmt(x.d)}/god.
+                    ·
+                    break-even ${beText}
+
+                  </div>
+
                 </div>
 
+                <button
+                  class="btn btn-ghost"
+                  onclick="deleteSaved(${x.id})"
+                >
+                  Obriši
+                </button>
+
               </div>
-
-              <button
-                class="btn btn-ghost"
-                onclick="deleteSaved(${x.id})"
-              >
-                Obriši
-              </button>
-
-            </div>
-          `;
-        }).join('')
+            `;
+          }
+        ).join('')
 
       : '<p class="muted">Još nema spremljenih usporedbi.</p>';
 }
 
 
 function deleteSaved(id) {
+
   const a =
     getSavedComparisons()
       .filter(
-        x => x.id !== id
+        x =>
+          x.id !== id
       );
 
   localStorage.setItem(
@@ -1681,13 +2111,24 @@ function deleteSaved(id) {
 // ============================================================
 
 async function shareResult() {
-  if (!last.c) return;
+
+  if (
+    !last.c
+  ) {
+    return;
+  }
 
   const beText =
-    last.beStatus === 'above'
+    last.beStatus ===
+    'above'
+
       ? `iznad ${fmt(last.be)}`
-      : last.beStatus === 'below'
+
+      : last.beStatus ===
+        'below'
+
         ? `ispod ${fmt(last.be)}`
+
         : fmt(last.be);
 
   const scoreDiff =
@@ -1700,12 +2141,16 @@ async function shareResult() {
     `(${last.pct >= 0 ? '+' : ''}${last.pct.toFixed(1)}%). ` +
     `Financijska razlika: ${signedMoney(last.fd)} godišnje. ` +
     `Vrijeme: ${signedNumber(last.saved, ' h/god.')}. ` +
-    `Job Score: ${last.c.score} → ${last.nn.score} ` +
+    `Work-Life Score: ${last.c.score} → ${last.nn.score} ` +
     `(${scoreDiff >= 0 ? '+' : ''}${scoreDiff}). ` +
     `Break-even bruto: ${beText} mjesečno.`;
 
-  if (navigator.share) {
+  if (
+    navigator.share
+  ) {
+
     try {
+
       await navigator.share({
         title:
           'WorthSwitch rezultat',
@@ -1718,20 +2163,25 @@ async function shareResult() {
 
       return;
     }
+
     catch (e) {}
   }
 
   try {
-    await navigator.clipboard.writeText(
-      text +
-      ' ' +
-      location.href
-    );
+
+    await navigator
+      .clipboard
+      .writeText(
+        text +
+        ' ' +
+        location.href
+      );
 
     alert(
       'Rezultat je kopiran u međuspremnik.'
     );
   }
+
   catch (e) {
     alert(text);
   }
@@ -1745,12 +2195,15 @@ async function shareResult() {
 window.addEventListener(
   'beforeinstallprompt',
   e => {
+
     e.preventDefault();
 
     deferredInstallPrompt =
       e;
 
-    if ($('installBtn')) {
+    if (
+      $('installBtn')
+    ) {
       $('installBtn').hidden =
         false;
     }
@@ -1758,11 +2211,15 @@ window.addEventListener(
 );
 
 
-if ($('installBtn')) {
+if (
+  $('installBtn')
+) {
+
   $('installBtn')
     .addEventListener(
       'click',
       async () => {
+
         if (
           !deferredInstallPrompt
         ) {
@@ -1790,15 +2247,22 @@ if ($('installBtn')) {
 // ============================================================
 
 if (
-  'serviceWorker' in navigator
+  'serviceWorker' in
+  navigator
 ) {
+
   window.addEventListener(
     'load',
     () => {
+
       navigator
         .serviceWorker
-        .register('sw.js')
-        .catch(() => {});
+        .register(
+          'sw.js'
+        )
+        .catch(
+          () => {}
+        );
     }
   );
 }
@@ -1809,4 +2273,5 @@ if (
 // ============================================================
 
 restoreDraft();
+updateWorkLifeLabels();
    
