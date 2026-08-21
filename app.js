@@ -121,7 +121,13 @@ function buildJobForms() {
         helper =
           '<div class="field-help">Broj uobičajenih remote dana u radnom tjednu.</div>';
       }
-
+if (['Other', 'Regres', 'Boz', 'Usk', 'Meal', 'TravelPay'].includes(s)) {
+  helper =
+    '<div class="field-help">' +
+    'Unesi iznos koji očekuješ stvarno primiti neoporezivo. ' +
+    'WorthSwitch ne provjerava zakonske limite pojedinih neoporezivih primitaka.' +
+    '</div>';
+}
       if (s === 'Benefits') {
         helper =
           '<div class="field-help">Procijeni godišnju vrijednost benefita koji nisu izravna novčana isplata.</div>';
