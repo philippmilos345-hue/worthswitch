@@ -1004,9 +1004,7 @@ function breakEvenText(be) {
 // ============================================================
 
 
-Philipp Miloš <philipp.milos345@gmail.com>
-15:05 (prije 0 minuta)
-prima ja
+
 
 function validateInputs() {
   const problems = [];
