@@ -3,4 +3,9 @@
   <url>
     <loc>https://worthswitch.hr/</loc>
   </url>
+  <url>
+  <loc>https://worthswitch.hr/koliku-placu-traziti.html</loc>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
 </urlset>
