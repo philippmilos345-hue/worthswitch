@@ -732,19 +732,20 @@ function calc(inputJob) {
     j.salary *
     j.months;
 
-  const regularShare =
-    grossAnnual
-      ? regularGross /
-        grossAnnual
-      : 0;
+  const regularTax =
+  annualEmploymentTax(
+    regularGross
+  );
 
-  const ns =
-    tax.net *
-    regularShare;
+const ns =
+  regularTax.net;
 
-  const nb =
+const nb =
+  Math.max(
+    0,
     tax.net -
-    ns;
+    regularTax.net
+  );
 
   const direct =
     j.other +
@@ -766,7 +767,7 @@ function calc(inputJob) {
   const workableDays =
     Math.max(
       0,
-      260 -
+      261 -
       j.vacation -
       holidays
     );
@@ -920,7 +921,7 @@ function calc(inputJob) {
 
 function breakEven(c, r) {
   let lo = 500;
-  let hi = 10000;
+  let hi = 50000;
 
   if (
     calc({
@@ -1199,12 +1200,17 @@ function calculate() {
   const be =
     beObj.value;
 
-  const pct =
-    c.total
-      ? d /
-        Math.abs(c.total) *
-        100
-      : 0;
+  const comparisonBase =
+  Math.max(
+    Math.abs(c.total),
+    Math.abs(nn.total),
+    1
+  );
+
+const pct =
+  d /
+  comparisonBase *
+  100;
 
   const verdict =
     resultVerdict(
