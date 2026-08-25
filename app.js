@@ -1221,7 +1221,8 @@ if (
     ['weekdayHolidays', 0, 20, 'broj blagdana koji padaju na radni dan'],
     ['hourValue', 0, 200, 'vrijednost sata slobodnog vremena'],
     ['dependents', 0, 20, 'broj uzdržavanih članova'],
-    ['children', 0, 20, 'broj djece']
+    ['children', 0, 20, 'broj djece'],
+    ['disability', 0, 12000, 'dodatni odbitak zbog invalidnosti']
   ];
 
   taxChecks.forEach(([id, min, max, label]) => {
