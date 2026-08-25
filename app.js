@@ -418,10 +418,22 @@ function childAllowance(k) {
 
 
 function allowance() {
+  const dependents =
+    Math.max(
+      0,
+      Math.floor(N('dependents'))
+    );
+
+  const children =
+    Math.max(
+      0,
+      Math.floor(N('children'))
+    );
+
   return (
     TAX_CONFIG_2026.personalAllowanceMonthly +
-    Math.max(0, N('dependents')) * 300 +
-    childAllowance(N('children')) +
+    dependents * 300 +
+    childAllowance(children) +
     Math.max(0, N('disability'))
   );
 }
