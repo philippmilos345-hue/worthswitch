@@ -239,6 +239,38 @@ function updateWorkLifeLabels() {
 // NAVIGATION
 // ============================================================
 
+function resetInputsToDefaults() {
+  document
+    .querySelectorAll('[data-save]')
+    .forEach(el => {
+
+      if (el.tagName === 'SELECT') {
+        const defaultOption =
+          [...el.options]
+            .find(option => option.defaultSelected);
+
+        el.value =
+          defaultOption
+            ? defaultOption.value
+            : el.options[0]?.value || '';
+      }
+      else {
+        el.value =
+          el.defaultValue;
+      }
+    });
+
+  updateAllowance();
+  updateCommuteHelpers();
+}
+
+
+function startNewFlow() {
+  resetInputsToDefaults();
+  startFlow();
+}
+
+
 function startFlow() {
   $('landing').classList.add('hidden');
   $('savedPanel').classList.add('hidden');
@@ -1722,12 +1754,17 @@ function simulate() {
     x.total -
     last.c.total;
 
-  const pct =
-    last.c.total
-      ? d /
-        Math.abs(last.c.total) *
-        100
-      : 0;
+  const comparisonBase =
+  Math.max(
+    Math.abs(last.c.total),
+    Math.abs(x.total),
+    1
+  );
+
+const pct =
+  d /
+  comparisonBase *
+  100;
 
   const verdict =
     resultVerdict(
@@ -2032,11 +2069,17 @@ function saveComparison() {
 
 function showSaved() {
 
+  $('landing')
+    .classList
+    .add('hidden');
+
+  $('wizard')
+    .classList
+    .add('hidden');
+
   $('savedPanel')
     .classList
-    .remove(
-      'hidden'
-    );
+    .remove('hidden');
 
   renderSaved();
 
@@ -2051,9 +2094,20 @@ function closeSaved() {
 
   $('savedPanel')
     .classList
-    .add(
-      'hidden'
-    );
+    .add('hidden');
+
+  $('wizard')
+    .classList
+    .add('hidden');
+
+  $('landing')
+    .classList
+    .remove('hidden');
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }
 
 
@@ -2308,6 +2362,7 @@ if (
 // INITIALIZE
 // ============================================================
 
-restoreDraft();
+updateAllowance();
+updateCommuteHelpers();
 updateWorkLifeLabels();
    
