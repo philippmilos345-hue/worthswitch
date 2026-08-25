@@ -40,7 +40,7 @@ const NEUTRAL_PERCENT = 1;
 
 const jobFields = [
   ['Salary', 'Bruto mjesečna plaća (€)', 'number', 2777],
-  ['Months', 'Broj plaća godišnje', 'number', 12],
+  ['Months', 'Broj redovnih mjesečnih plaća godišnje', 'number', 12],
   ['Bonus', 'Godišnji bruto bonus (€)', 'number', 0],
   ['Other', 'Ostali neoporezivi primici godišnje (€)', 'number', 0],
   ['Regres', 'Regres (€)', 'number', 0],
@@ -111,7 +111,12 @@ function buildJobForms() {
           '<div class="field-help">Upiši godišnji bruto iznos bonusa. ' +
           'Primjer: 10% bonusa na 3.500 € × 12 = 4.200 €.</div>';
       }
-
+if (s === 'Months') {
+  helper =
+    '<div class="field-help">' +
+    'U pravilu 12. Dodatnu 13. ili 14. plaću unesi u godišnji bruto bonus.' +
+    '</div>';
+}
       if (s === 'Commute') {
         helper =
           `<div class="field-help" id="${p}CommuteHelp">` +
