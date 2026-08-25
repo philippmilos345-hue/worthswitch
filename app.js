@@ -1043,7 +1043,7 @@ const nb =
 // ============================================================
 
 function breakEven(c, r) {
-  let lo = 500;
+  let lo = 0;
   let hi = 50000;
 
   if (
@@ -1553,7 +1553,7 @@ const pct =
 
   const simMin =
     Math.max(
-      500,
+      0,
       Math.floor(
         Math.min(
           nr.salary,
