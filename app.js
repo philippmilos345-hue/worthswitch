@@ -14,7 +14,8 @@ const APP_VERSION = '5.3';
 const TAX_CONFIG_2026 = {
   personalAllowanceMonthly: 600,
   annualHigherRateThreshold: 60000,
-  pensionRate: 0.20
+  pensionRateI: 0.15,
+  pensionRateII: 0.05
 };
 
 // Preseti su samo pomoćni.
@@ -508,26 +509,39 @@ function monthlyPensionContribution(grossMonthly) {
   let reduction = 0;
 
   if (gross <= 700) {
-    reduction =
-      Math.min(300, gross);
+    reduction = 300;
   }
   else if (gross <= 1300) {
     reduction =
       0.5 * (1300 - gross);
   }
 
-  const pensionBase =
+  reduction =
+    Math.min(reduction, gross);
+
+  const pensionBaseI =
     Math.max(0, gross - reduction);
+
+  const pensionI =
+    pensionBaseI *
+    TAX_CONFIG_2026.pensionRateI;
+
+  const pensionII =
+    gross *
+    TAX_CONFIG_2026.pensionRateII;
 
   return {
     gross,
     reduction,
-    pensionBase,
+    pensionBaseI,
+    pensionI,
+    pensionII,
     pension:
-      pensionBase *
-      TAX_CONFIG_2026.pensionRate
+      pensionI +
+      pensionII
   };
 }
+
 // ============================================================
 // ANNUAL EMPLOYMENT TAX
 // ============================================================
@@ -544,13 +558,16 @@ function annualEmploymentTax(
     );
 
   const pension =
-    pensionOverride === null
-      ? grossAnnual *
-        TAX_CONFIG_2026.pensionRate
-      : Math.max(
-          0,
-          Number(pensionOverride) || 0
-        );
+  pensionOverride === null
+    ? grossAnnual *
+      (
+        TAX_CONFIG_2026.pensionRateI +
+        TAX_CONFIG_2026.pensionRateII
+      )
+    : Math.max(
+        0,
+        Number(pensionOverride) || 0
+      );
 
   const annualAllowance =
     Math.max(
@@ -810,7 +827,10 @@ const regularPension =
 // umanjenje MIO osnovice.
 const bonusPension =
   j.bonus *
-  TAX_CONFIG_2026.pensionRate;
+  (
+    TAX_CONFIG_2026.pensionRateI +
+    TAX_CONFIG_2026.pensionRateII
+  );
 
 const totalPension =
   regularPension +
