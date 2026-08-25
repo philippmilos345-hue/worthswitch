@@ -42,10 +42,18 @@ self.addEventListener('fetch',e=>{
 
         return response;
       })
-      .catch(()=>
-        caches.match(e.request).then(
-          cached=>cached||caches.match('./')
-        )
-      )
+      .catch(async () => {
+  const cached = await caches.match(e.request);
+
+  if (cached) {
+    return cached;
+  }
+
+  if (e.request.mode === 'navigate') {
+    return caches.match('./');
+  }
+
+  return Response.error();
+})
   );
 });
