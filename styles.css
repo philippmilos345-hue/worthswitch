@@ -711,3 +711,52 @@ footer{
     min-width:0;
   }
 }
+/* =========================================================
+   MOBILE RESULT TABLE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  #comparison .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #comparison table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  #comparison th,
+  #comparison td {
+    padding: 12px 8px;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+
+  /* Naziv stavke */
+  #comparison th:first-child,
+  #comparison td:first-child {
+    width: 44%;
+    text-align: left;
+  }
+
+  /* Trenutni + Nova ponuda */
+  #comparison th:nth-child(2),
+  #comparison td:nth-child(2),
+  #comparison th:nth-child(3),
+  #comparison td:nth-child(3) {
+    width: 28%;
+    text-align: right;
+  }
+
+  #comparison th {
+    font-size: 12px;
+  }
+
+  #comparison td {
+    font-size: 14px;
+  }
+}
