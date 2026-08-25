@@ -1041,7 +1041,15 @@ function breakEvenText(be) {
 
 function validateInputs() {
   const problems = [];
-
+const integerFields = new Set([
+  'cMonths',
+  'nMonths',
+  'cVacation',
+  'nVacation',
+  'dependents',
+  'children',
+  'weekdayHolidays'
+]);
   ['c', 'n'].forEach(p => {
     const name =
       p === 'c'
@@ -1087,7 +1095,15 @@ function validateInputs() {
         );
         return;
       }
-
+if (
+  integerFields.has(id) &&
+  !Number.isInteger(value)
+) {
+  problems.push(
+    `${name}: polje "${label}" mora biti cijeli broj.`
+  );
+  return;
+}
       if (value < min || value > max) {
         problems.push(
           `${name}: provjeri "${label}" — dopušten raspon je ${min} do ${max}.`
@@ -1127,7 +1143,15 @@ function validateInputs() {
       );
       return;
     }
-
+if (
+  integerFields.has(id) &&
+  !Number.isInteger(value)
+) {
+  problems.push(
+    `Porezni profil: polje "${label}" mora biti cijeli broj.`
+  );
+  return;
+}
     if (value < min || value > max) {
       problems.push(
         `Porezni profil: provjeri "${label}" — dopušten raspon je ${min} do ${max}.`
