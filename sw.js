@@ -1,4 +1,4 @@
-const CACHE='worthswitch-v5-3';
+const CACHE='worthswitch-v5-3-1';
 
 const ASSETS=[
   './',
