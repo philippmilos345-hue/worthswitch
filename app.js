@@ -501,7 +501,33 @@ function signedNumber(
   suffix;
 }
 
+function monthlyPensionContribution(grossMonthly) {
+  const gross =
+    Math.max(0, Number(grossMonthly) || 0);
 
+  let reduction = 0;
+
+  if (gross <= 700) {
+    reduction =
+      Math.min(300, gross);
+  }
+  else if (gross <= 1300) {
+    reduction =
+      0.5 * (1300 - gross);
+  }
+
+  const pensionBase =
+    Math.max(0, gross - reduction);
+
+  return {
+    gross,
+    reduction,
+    pensionBase,
+    pension:
+      pensionBase *
+      TAX_CONFIG_2026.pensionRate
+  };
+}
 // ============================================================
 // ANNUAL EMPLOYMENT TAX
 // ============================================================
