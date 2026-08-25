@@ -532,7 +532,10 @@ function monthlyPensionContribution(grossMonthly) {
 // ANNUAL EMPLOYMENT TAX
 // ============================================================
 
-function annualEmploymentTax(grossAnnual) {
+function annualEmploymentTax(
+  grossAnnual,
+  pensionOverride = null
+) {
 
   grossAnnual =
     Math.max(
@@ -541,8 +544,13 @@ function annualEmploymentTax(grossAnnual) {
     );
 
   const pension =
-    grossAnnual *
-    TAX_CONFIG_2026.pensionRate;
+    pensionOverride === null
+      ? grossAnnual *
+        TAX_CONFIG_2026.pensionRate
+      : Math.max(
+          0,
+          Number(pensionOverride) || 0
+        );
 
   const annualAllowance =
     Math.max(
@@ -776,25 +784,57 @@ function calc(inputJob) {
       inputJob
     );
 
-  const grossAnnual =
-    j.salary *
-    j.months +
-    j.bonus;
+const regularGross =
+  j.salary *
+  j.months;
 
-  const tax =
-    annualEmploymentTax(
-      grossAnnual
-    );
+const grossAnnual =
+  regularGross +
+  j.bonus;
 
-  const regularGross =
-    j.salary *
-    j.months;
 
-  const regularTax =
-  annualEmploymentTax(
-    regularGross
+// MIO za redovnu plaću računa se mjesečno.
+// Time se pravilno primjenjuje umanjenje osnovice
+// za bruto plaće do 1.300 €.
+const monthlyPension =
+  monthlyPensionContribution(
+    j.salary
   );
 
+const regularPension =
+  monthlyPension.pension *
+  j.months;
+
+
+// Bonus konzervativno ne dobiva dodatno
+// umanjenje MIO osnovice.
+const bonusPension =
+  j.bonus *
+  TAX_CONFIG_2026.pensionRate;
+
+const totalPension =
+  regularPension +
+  bonusPension;
+
+
+// Godišnji obračun redovne plaće.
+const regularTax =
+  annualEmploymentTax(
+    regularGross,
+    regularPension
+  );
+
+
+// Godišnji obračun cijele bruto naknade.
+const tax =
+  annualEmploymentTax(
+    grossAnnual,
+    totalPension
+  );
+
+
+// Neto redovne plaće i inkrementalni
+// neto učinak bonusa.
 const ns =
   regularTax.net;
 
