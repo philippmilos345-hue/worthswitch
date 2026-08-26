@@ -41,7 +41,61 @@ function trackEvent(name, params = {}) {
     gtag('event', name, params);
   }
 }
+const ANALYTICS_CONSENT_KEY = 'worthswitchAnalyticsConsent';
 
+function setAnalyticsConsent(accepted) {
+  const value = accepted ? 'granted' : 'denied';
+
+  localStorage.setItem(
+    ANALYTICS_CONSENT_KEY,
+    value
+  );
+
+  if (typeof gtag === 'function') {
+    gtag('consent', 'update', {
+      analytics_storage: value,
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+  }
+
+  const banner = $('cookieBanner');
+
+  if (banner) {
+    banner.hidden = true;
+  }
+}
+
+function initAnalyticsConsent() {
+  const savedConsent =
+    localStorage.getItem(
+      ANALYTICS_CONSENT_KEY
+    );
+
+  if (savedConsent === 'granted') {
+    if (typeof gtag === 'function') {
+      gtag('consent', 'update', {
+        analytics_storage: 'granted',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+    }
+
+    return;
+  }
+
+  if (savedConsent === 'denied') {
+    return;
+  }
+
+  const banner = $('cookieBanner');
+
+  if (banner) {
+    banner.hidden = false;
+  }
+}
 // ============================================================
 // JOB FIELDS
 // ============================================================
@@ -2515,4 +2569,4 @@ if (
 updateAllowance();
 updateCommuteHelpers();
 updateWorkLifeLabels();
-   
+initAnalyticsConsent();
