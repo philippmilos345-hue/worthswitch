@@ -281,6 +281,9 @@ function resetInputsToDefaults() {
 
 function startNewFlow() {
   resetInputsToDefaults();
+
+  trackEvent('comparison_started');
+
   startFlow();
 }
 
@@ -1399,7 +1402,12 @@ const pct =
     pct,
     verdict
   };
-
+trackEvent('comparison_completed', {
+  result_type: verdict.type,
+  total_job_value_difference: Math.round(d),
+  financial_difference: Math.round(fd),
+  time_difference_hours: Math.round(saved)
+});
 
   // ---------------- RESULT HERO ----------------
 
@@ -2196,7 +2204,10 @@ function saveComparison() {
       )
     )
   );
-
+trackEvent('comparison_saved', {
+  total_job_value_difference: Math.round(last.d),
+  financial_difference: Math.round(last.fd)
+});
   alert(
     'Usporedba je spremljena na ovom uređaju.'
   );
@@ -2343,7 +2354,10 @@ async function shareResult() {
   ) {
     return;
   }
-
+trackEvent('share_clicked', {
+  total_job_value_difference: Math.round(last.d),
+  financial_difference: Math.round(last.fd)
+});
   const beText =
     last.beStatus ===
     'above'
