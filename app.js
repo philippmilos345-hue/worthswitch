@@ -32,7 +32,15 @@ const rates = {
 // ako je razlika Total Job Value manja od 1%, ponude prikazujemo
 // kao približno izjednačene.
 const NEUTRAL_PERCENT = 1;
+// ============================================================
+// ANALYTICS
+// ============================================================
 
+function trackEvent(name, params = {}) {
+  if (typeof gtag === 'function') {
+    gtag('event', name, params);
+  }
+}
 
 // ============================================================
 // JOB FIELDS
