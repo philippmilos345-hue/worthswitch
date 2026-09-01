@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
     <loc>https://worthswitch.hr/</loc>
   </url>
+
   <url>
-  <loc>https://worthswitch.hr/koliku-placu-traziti.html</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
+    <loc>https://worthswitch.hr/koliku-placu-traziti.html</loc>
+  </url>
+
+  <url>
+    <loc>https://worthswitch.hr/kako-usporediti-dvije-ponude-za-posao.html</loc>
+  </url>
+
 </urlset>
